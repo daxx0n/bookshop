@@ -7,7 +7,7 @@ db.sqlite3
 media
 
 # Settings
-local_settings.py
+src/proj/local_settings.py
 
 # Backup files # 
 *.bak 
