@@ -6,8 +6,6 @@ __pycache__
 db.sqlite3
 media
 
-# Settings
-src/proj/local_settings.py
 
 # Backup files # 
 *.bak 
@@ -51,6 +49,7 @@ atlassian-ide-plugin.xml
 # Python # 
 *.py[cod] 
 *$py.class 
+local_settings.py
 
 # Distribution / packaging 
 .Python build/ 
