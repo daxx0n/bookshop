@@ -26,11 +26,8 @@ SECRET_KEY = local_settings.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-<<<<<<< HEAD
+
 ALLOWED_HOSTS = ['stanislavksenzov.pythonanywhere.com',]
-=======
-ALLOWED_HOSTS = ['stanislavksenzov.pythonanywhere.com']
->>>>>>> 8186f02fc3cfa088af61ecc77c294f6a531738ad
 
 
 # Application definition
@@ -121,17 +118,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-<<<<<<< HEAD
+
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = '/home/StanislavKsenzov/static'
 MEDIA_ROOT = '/home/StanislavKsenzov/media'
-=======
-STATIC_URL = 'static/'
-MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/django-dummy/static'
-MEDIA_ROOT = '/home/denniskot/django-dummy/media'
->>>>>>> 8186f02fc3cfa088af61ecc77c294f6a531738ad
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
