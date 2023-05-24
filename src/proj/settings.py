@@ -26,7 +26,7 @@ SECRET_KEY = local_settings.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['stanislavksenzov.pythonanywhere.com',]
 
 # Application definition
 
@@ -121,6 +121,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = '/home/StanislavKsenzov/static'
 MEDIA_ROOT = '/home/StanislavKsenzov/media'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
