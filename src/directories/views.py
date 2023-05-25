@@ -7,33 +7,43 @@ from django.http import HttpResponse
 
 def home_page(request):
     authors = models.Author.objects.all()
-    html = "<ul>"
-    for author in authors:
-        html += f"<li> {author.pk} Author {author.author_firstname} </li>"
-    html += "<ul>"
-    return render (request, template_name="home_page.html", context={})
+    return render (
+        request, 
+        template_name="home_page.html", 
+        context={'objects':authors})
 
 # Read_object
 
 def view_Author(request, pk):
     author = models.Author.objects.get(pk=int(pk))
-    html = f"Author's PK:{author.pk}. Author's firstname and lastname: {author.author_firstname} {author.author_lastname}"
-    return HttpResponse(html)
+    return render (
+        request, 
+        template_name="view_authors.html", 
+        context={'object':author})
 
 def view_Serie(request, pk):
     serie = models.Serie.objects.get(pk=int(pk))
-    html = f"Serie PK:{serie.pk}. Serie name: {serie.serie_name}"
-    return HttpResponse(html)
+    return render (
+        request, 
+        template_name="view_series.html", 
+        context={'object':serie})
+
 
 def view_Genre(request, pk):
     genre = models.Genre.objects.get(pk=int(pk))
-    html = f"Genre PK:{genre.pk}. Genre name: {genre.genre_name}"
-    return HttpResponse(html)
+    return render (
+        request, 
+        template_name="view_genres.html", 
+        context={'object':genre})
+
 
 def view_Publisher(request, pk):
     publisher = models.Publisher.objects.get(pk=int(pk))
-    html = f"Publisher's PK:{publisher.pk}. Publisher's name: {publisher.publisher_name}"
-    return HttpResponse(html)
+    return render (
+        request, 
+        template_name="view_publishers.html", 
+        context={'object':publisher})
+
 
 # Delete object
 
