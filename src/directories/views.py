@@ -7,6 +7,6 @@ from django.http import HttpResponse
 def view_Author(request, pk):
     print (pk)
     author = models.Author.objects.get(pk=int(pk))
-    html = f"Author PK:{author.pk} Author name {author.name}"
+    html = f"Author PK:{author.author_firstname.pk} Author name {author.author_firstname.pk}"
     return HttpResponse(html)
     
