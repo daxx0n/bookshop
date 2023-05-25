@@ -29,5 +29,5 @@ urlpatterns = [
     path('author_delete/<int:pk>', views.delete_Author),
     path('serie_delete/<int:pk>', views.delete_Serie),
     path('genre_delete/<int:pk>', views.delete_Genre),
-    path('publisher_delete/<int:pk>', views.delete_Publisher),   
+    path('publisher_delete/<int:pk>', views.delete_Publisher),
 ]
