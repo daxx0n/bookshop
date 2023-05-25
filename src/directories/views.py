@@ -31,13 +31,19 @@ def view_Serie(request, pk):
 
 def view_Genre(request, pk):
     genre = models.Genre.objects.get(pk=int(pk))
-    html = f"Genre PK:{genre.pk}. Genre name: {genre.genre_name}"
-    return HttpResponse(html)
+    return render (
+        request, 
+        template_name="view_genres.html", 
+        context={'object':genre})
+
 
 def view_Publisher(request, pk):
     publisher = models.Publisher.objects.get(pk=int(pk))
-    html = f"Publisher's PK:{publisher.pk}. Publisher's name: {publisher.publisher_name}"
-    return HttpResponse(html)
+    return render (
+        request, 
+        template_name="view_publishers.html", 
+        context={'object':publisher})
+
 
 # Delete object
 
