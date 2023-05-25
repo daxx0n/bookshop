@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+</head>
+<body>
+    <table border = "1">
+        <tr>
+            <td>PK</td>
+            <td>Author's Firstname</td>
+            <td>Author's Lastname</td>
+            <td>Actions</td>
+        </tr>
+        {% for object in objects %}
+        <tr>
+            <td>{{ object.pk }} </td> 
+            <td>{{ object.author_firstname }}</td> 
+            <td>{{ object.author_lastname }} </td>
+            <td><a href="/author/{{ object.pk }}"">view</a></td>
+        </tr>
+            {% endfor %}
+    </table>
+</body>
+</html>
