@@ -7,6 +7,7 @@
     <title>Home page</title>
 </head>
 <body>
+    <h1>Авторы</h1>
     <table border = "1">
         <tr>
             <td>PK</td>
@@ -19,7 +20,25 @@
             <td>{{ object.pk }} </td> 
             <td>{{ object.author_firstname }}</td> 
             <td>{{ object.author_lastname }} </td>
-            <td><a href="/author/{{ object.pk }}"">view</a></td>
+            <td><a href="/author/{{ object.pk }}">view</a></td>
+        </tr>
+            {% endfor %}
+    </table>
+
+    <h1>Жанры</h1>
+    <table border = "1">
+        <tr>
+            <td>PK</td>
+            <td>Genre name</td>
+            <td>Description</td>
+            <td>Actions</td>
+        </tr>
+        {% for object1 in objects1 %}
+        <tr>
+            <td>{{ object1.pk }} </td> 
+            <td>{{ object1.genre_name }}</td> 
+            <td>{{ object1.genre_description }} </td>
+            <td><a href="/genre/{{ object1.pk }}"">view</a></td>
         </tr>
             {% endfor %}
     </table>
