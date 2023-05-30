@@ -1,9 +1,24 @@
 from django.shortcuts import render
 from . import models
 from django.http import HttpResponse
+from django.views import generic
 
 # Create your views here.
+
 # Home page
+
+class HomePage (generic.TemplateView):
+    template_name = "home_page.html"
+
+class AuthorView (generic.DetailView):
+    template_name = "view_authors.html"
+    model = models.Author
+
+class AuthorCreateView (generic.CreateView):
+    model = models.Author
+    fields = [
+        'author_firstname, author_lastname'
+    ]
 
 def home_page(request):
     authors = models.Author.objects.all()
