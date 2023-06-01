@@ -1,10 +1,35 @@
 from django.shortcuts import render
 from . import models
 from django.http import HttpResponse
+from django.views import generic
 
 # Create your views here.
+
 # Home page
 
+class HomePage (generic.TemplateView):
+    template_name = "home_page.html"
+
+class AuthorView (generic.DetailView):
+    template_name = "view_authors.html"
+    model = models.Author
+
+class AuthorCreateView (generic.CreateView):
+    model = models.Author
+    fields = [
+        'author_firstname', 'author_lastname'
+    ]
+    template_name = "add_city.html"
+    success_url = "/added"
+    
+class AuthorUpdateView (generic.UpdateView):
+    model = models.Author
+    fields = [
+        'author_firstname', 'author_lastname'
+    ]
+    template_name = "add_city.html"
+    success_url = "/added"
+    
 def home_page(request):
     authors = models.Author.objects.all()
     return render (
@@ -62,3 +87,6 @@ def delete_Serie(request, pk):
 def delete_Genre(request, pk):
     models.Genre.objects.get(pk=int(pk)).delete()
     return HttpResponse(f"Genre, id {pk} has been deleted!")
+
+def success_page():
+    pass

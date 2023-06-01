@@ -22,6 +22,8 @@ from directories import views
 urlpatterns = [
     path('templ/', views.home_page),
     path('admin/', admin.site.urls),
+    path('added/', views.success_page),
+    path('author_cbv/<int:pk>', views.AuthorView.as_view()),
     path('author/<int:pk>', views.view_Author),
     path('serie/<int:pk>', views.view_Serie),
     path('genre/<int:pk>', views.view_Genre),
@@ -30,4 +32,7 @@ urlpatterns = [
     path('serie_delete/<int:pk>', views.delete_Serie),
     path('genre_delete/<int:pk>', views.delete_Genre),
     path('publisher_delete/<int:pk>', views.delete_Publisher),
+    path('author_add_cbv/', views.AuthorCreateView.as_view()),
+    path('author_upd_cbv/<int:pk>', views.AuthorUpdateView.as_view()),
+    path('', views.HomePage.as_view()),
 ]
