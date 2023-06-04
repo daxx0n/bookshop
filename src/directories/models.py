@@ -18,7 +18,11 @@ class Author(models.Model):
             default = "Author's lastname"
     )
     def __str__(self):
-        return str(self.author_lastname)+ " " + str(self.author_firstname[0]+ ".")
+        return str(self.author_lastname)+ " " + str(self.author_firstname[0])+ "."
+ 
+    def get_absolute_url(self):
+        return "/success_page"
+    
 
 class Serie(models.Model):
     serie_name = models.CharField(
