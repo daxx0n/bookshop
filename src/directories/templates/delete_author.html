@@ -8,8 +8,7 @@
 </head>
 <body>
     <h1> {{ greeting }} </h1>
-    <h1>Author # {{ object.pk }}</h1>
-    <b> Author name </b> {{ object.author_firstname }} {{ object.author_lastname }}
+    <b> Delete author {{ object.author_firstname }} {{ object.author_lastname }} ? </b>
     <form action="" method="post">
         {% csrf_token $%}
         {{ form.as_p }}

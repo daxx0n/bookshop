@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from . import models
-from . import forms
 from django.http import HttpResponse
 from django.views import generic
+from . import models
+from . import forms
+
 
 # Create your views here.
 
@@ -40,7 +41,7 @@ class AuthorUpdateView (generic.UpdateView):
     
 class AuthorDeleteView (generic.DeleteView):
     model = models.Author
-    template_name = "delete.html"
+    template_name = "delete_author.html"
     success_url = "/success"
     
 # Serie
