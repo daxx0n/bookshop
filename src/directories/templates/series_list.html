@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Series list</title>
+</head>
+<body>
+    <table border=3>
+        <tr>
+            <th>pk</th>
+            <th>Serie name</th>
+            <th>Serie descripton</th>
+            <th>Actions</th>
+        </tr>
+        {% for obj in object_list %}
+        <tr>
+            <td> {{ obj.pk }} </td>
+            <td> {{ obj.serie_name }} </td>
+            <td> {{ obj.serie_description }} </td>
+            <td> <a href = "/serie_upd/{{ obj.pk }}">update</a> </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+</body>
+</html>

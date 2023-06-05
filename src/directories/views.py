@@ -13,6 +13,11 @@ class HomePage (generic.TemplateView):
 
 #Author
 
+class AuthorListView (generic.ListView):
+    template_name = "author_list.html"
+    model = models.Author
+    paginate_by = 3
+
 class AuthorView (generic.DetailView):
     template_name = "view_authors.html"
     model = models.Author
@@ -40,6 +45,11 @@ class AuthorDeleteView (generic.DeleteView):
     
 # Serie
 
+class SerieListView (generic.ListView):
+    template_name = "series_list.html"
+    model = models.Serie
+    paginate_by = 3
+
 class SerieView (generic.DetailView):
     template_name = "view_series.html"
     model = models.Serie
@@ -50,7 +60,7 @@ class SerieCreateView (generic.CreateView):
         'serie_name', 'serie_description'
     ]
     template_name = "add.html"
-    success_url = "/added"
+    success_url = "/success"
     
 class SerieUpdateView (generic.UpdateView):
     model = models.Serie
@@ -58,7 +68,7 @@ class SerieUpdateView (generic.UpdateView):
         'serie_name', 'serie_description'
     ]
     template_name = "update.html"
-    success_url = "/added"
+    success_url = "/success"
  
 class SerieDeleteView (generic.DeleteView):
     model = models.Serie
@@ -66,6 +76,11 @@ class SerieDeleteView (generic.DeleteView):
     success_url = "/success"  
      
 # Genres
+
+class GenreListView (generic.ListView):
+    template_name = "genres_list.html"
+    model = models.Genre
+    paginate_by = 2
 
 class GenreView (generic.DetailView):
     template_name = "view_genres.html"
@@ -77,7 +92,7 @@ class GenreCreateView (generic.CreateView):
         'genre_name', 'genre_description'
     ]
     template_name = "add.html"
-    success_url = "/added"
+    success_url = "/success"
     
 class GenreUpdateView (generic.UpdateView):
     model = models.Genre
@@ -85,7 +100,7 @@ class GenreUpdateView (generic.UpdateView):
         'genre_name', 'genre_description'
     ]
     template_name = "update.html"
-    success_url = "/added"   
+    success_url = "/success"   
 
 class GenreDeleteView (generic.DeleteView):
     model = models.Serie
@@ -93,6 +108,11 @@ class GenreDeleteView (generic.DeleteView):
     success_url = "/success"  
     
 #Publishers 
+
+class PublisherListView (generic.ListView):
+    template_name = "publishers_list.html"
+    model = models.Publisher
+    paginate_by = 3
 
 class PublisherView (generic.DetailView):
     template_name = "view_publishers.html"
@@ -104,7 +124,7 @@ class PublisherCreateView (generic.CreateView):
         'publisher_name', 'publisher_description'
     ]
     template_name = "add.html"
-    success_url = "/added"
+    success_url = "/success"
     
 class PublisherUpdateView (generic.UpdateView):
     model = models.Publisher
@@ -112,7 +132,7 @@ class PublisherUpdateView (generic.UpdateView):
         'publisher_name', 'publisher_description'
     ]
     template_name = "update.html"
-    success_url = "/added"  
+    success_url = "/success"  
     
 class PublisherDeleteView (generic.DeleteView):
     model = models.Publisher

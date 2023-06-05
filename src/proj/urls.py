@@ -23,6 +23,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomePage.as_view(), name="Home Page"),
     path('success/', views.success_page, name="Success Page"),
+    path('authors_list_view/', views.AuthorListView.as_view()),
+    path('genres_list_view/', views.GenreListView.as_view()),
+    path('publishers_list_view/', views.PublisherListView.as_view()),
+    path('series_list_view/', views.SerieListView.as_view()),
     #Read
     path('author_view/<int:pk>', views.AuthorView.as_view()),
     path('serie_view/<int:pk>', views.SerieView.as_view()),
