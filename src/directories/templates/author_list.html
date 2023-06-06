@@ -16,7 +16,11 @@
         <td> {{ obj.pk }} </td>
         <td> {{ obj.author_firstname }} </td>
         <td> {{ obj.author_lastname }} </td>
-        <td> <a href = "/author_upd/{{ obj.pk }}">update</a> </td>
+        <td> 
+            <a href = "{% url "Author Update" pk=obj.pk %}">update</a>
+            <a href = "{% url "Author View" pk=obj.pk %}">view</a>
+            <a href = "{% url "Author Delete" pk=obj.pk %}">delete</a>
+        </td>
      </tr>
     {% endfor %}
 </table>
