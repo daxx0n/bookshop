@@ -41,7 +41,7 @@ class AuthorUpdateView (generic.UpdateView):
     
 class AuthorDeleteView (generic.DeleteView):
     model = models.Author
-    template_name = "delete_author.html"
+    template_name = "delete.html"
     success_url = "/success"
     
 # Serie
