@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block TITLE %} Delete author {% endblock TITLE %}
+
+{% block BODY %}
+
+<h1> {{ greeting }} </h1>
+<b> Delete author {{ object.author_firstname }} {{ object.author_lastname }} ? </b>
+<form action="" method="post">
+    {% csrf_token $%}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-danger" >Delete</button>
+</form>
+
+{% endblock BODY %}

@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genres</title>
-</head>
-<body>
-    <h1>Genre # {{ object.pk }}</h1>
-    <b> Genre's name </b> {{ object.genre_name }}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block TITLE %} Genres view {% endblock TITLE %}
+
+{% block BODY %}
+
+<h1>Genre # {{ object.pk }}</h1>
+<b> Genre's name </b> {{ object.genre_name }}
+
+{% endblock BODY %}

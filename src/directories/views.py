@@ -1,14 +1,21 @@
 from django.shortcuts import render
-from . import models
 from django.http import HttpResponse
 from django.views import generic
+from . import models
+from . import forms
 
-# Create your views here.
 
 # Home page
 
 class HomePage (generic.TemplateView):
     template_name = "home_page.html"
+
+#Author
+
+class AuthorListView (generic.ListView):
+    template_name = "author_list.html"
+    model = models.Author
+    paginate_by = 3
 
 class AuthorView (generic.DetailView):
     template_name = "view_authors.html"
@@ -19,74 +26,113 @@ class AuthorCreateView (generic.CreateView):
     fields = [
         'author_firstname', 'author_lastname'
     ]
-    template_name = "add_city.html"
-    success_url = "/added"
+    template_name = "add.html"
     
 class AuthorUpdateView (generic.UpdateView):
     model = models.Author
     fields = [
         'author_firstname', 'author_lastname'
     ]
-    template_name = "add_city.html"
-    success_url = "/added"
+    template_name = "update.html"
     
-def home_page(request):
-    authors = models.Author.objects.all()
+class AuthorDeleteView (generic.DeleteView):
+    model = models.Author
+    template_name = "delete_author.html"
+    
+# Serie
+
+class SerieListView (generic.ListView):
+    template_name = "series_list.html"
+    model = models.Serie
+    paginate_by = 3
+
+class SerieView (generic.DetailView):
+    template_name = "view_series.html"
+    model = models.Serie
+
+class SerieCreateView (generic.CreateView):
+    model = models.Serie
+    fields = [
+        'serie_name', 'serie_description'
+    ]
+    template_name = "add.html"
+    
+class SerieUpdateView (generic.UpdateView):
+    model = models.Serie
+    fields = [
+        'serie_name', 'serie_description'
+    ]
+    template_name = "update.html"
+ 
+class SerieDeleteView (generic.DeleteView):
+    model = models.Serie
+    template_name = "delete_series.html"
+     
+# Genres
+
+class GenreListView (generic.ListView):
+    template_name = "genres_list.html"
+    model = models.Genre
+    paginate_by = 2
+
+class GenreView (generic.DetailView):
+    template_name = "view_genres.html"
+    model = models.Genre
+
+class GenreCreateView (generic.CreateView):
+    model = models.Genre
+    fields = [
+        'genre_name', 'genre_description'
+    ]
+    template_name = "add.html"
+    
+class GenreUpdateView (generic.UpdateView):
+    model = models.Genre
+    fields = [
+        'genre_name', 'genre_description'
+    ]
+    template_name = "update.html"
+  
+class GenreDeleteView (generic.DeleteView):
+    model = models.Serie
+    template_name = "delete_genres.html"  
+    
+#Publishers 
+
+class PublisherListView (generic.ListView):
+    template_name = "publishers_list.html"
+    model = models.Publisher
+    paginate_by = 3
+
+class PublisherView (generic.DetailView):
+    template_name = "view_publishers.html"
+    model = models.Publisher
+
+class PublisherCreateView (generic.CreateView):
+    model = models.Publisher
+    fields = [
+        'publisher_name', 'publisher_description'
+    ]
+    template_name = "add.html"
+    
+class PublisherUpdateView (generic.UpdateView):
+    model = models.Publisher
+    fields = [
+        'publisher_name', 'publisher_description'
+    ]
+    template_name = "update.html"
+ 
+    
+class PublisherDeleteView (generic.DeleteView):
+    model = models.Publisher
+    template_name = "delete_publishers.html"
+  
+     
+# Success page
+
+def success_page(request):
     return render (
-        request, 
-        template_name="home_page.html", 
-        context={'objects':authors})
-
-# Read_object
-
-def view_Author(request, pk):
-    author = models.Author.objects.get(pk=int(pk))
-    return render (
-        request, 
-        template_name="view_authors.html", 
-        context={'object':author})
-
-def view_Serie(request, pk):
-    serie = models.Serie.objects.get(pk=int(pk))
-    return render (
-        request, 
-        template_name="view_series.html", 
-        context={'object':serie})
-
-
-def view_Genre(request, pk):
-    genre = models.Genre.objects.get(pk=int(pk))
-    return render (
-        request, 
-        template_name="view_genres.html", 
-        context={'object':genre})
-
-
-def view_Publisher(request, pk):
-    publisher = models.Publisher.objects.get(pk=int(pk))
-    return render (
-        request, 
-        template_name="view_publishers.html", 
-        context={'object':publisher})
-
-
-# Delete object
-
-def delete_Publisher(request, pk):
-    models.Publisher.objects.get(pk=int(pk)).delete()
-    return HttpResponse(f"Publisher, id {pk} has been deleted!")
-
-def delete_Author(request, pk):
-    models.Author.objects.get(pk=int(pk)).delete()
-    return HttpResponse(f"Author, id {pk} has been deleted!")
-
-def delete_Serie(request, pk):
-    models.Serie.objects.get(pk=int(pk)).delete()
-    return HttpResponse(f"Serie, id {pk} has been deleted!")
-
-def delete_Genre(request, pk):
-    models.Genre.objects.get(pk=int(pk)).delete()
-    return HttpResponse(f"Genre, id {pk} has been deleted!")
-
-def success_page():
-    pass
+        request,
+        template_name = "success_page.html",
+        context = {"message": "The object was created/updated or deleted succefully!"}
+        )

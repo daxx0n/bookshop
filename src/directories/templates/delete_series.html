@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block TITLE %} Delete serie {% endblock TITLE %}
+
+{% block BODY %}
+
+<h1> {{ greeting }} </h1>
+<h1>Serie # {{ object.pk }}</h1>
+<b> Serie name </b> {{ object.serie_name }}
+<br>
+<b> Serie description </b> {{ object.serie_description }}
+<form action="" method="post">
+    {% csrf_token $%}
+    {{ form.as_p }}
+    <button type="submit">Delete</button>
+</form>
+
+{% endblock BODY %}  

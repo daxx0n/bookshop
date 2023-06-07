@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block TITLE %} Genres list {% endblock TITLE %}
+
+{% block BODY %}
+
+<table border=3>
+    <tr>
+        <th>pk</th>
+        <th>Genre name</th>
+        <th>Genre descripton</th>
+        <th>Actions</th>
+    </tr>
+    {% for obj in object_list %}
+    <tr>
+        <td> {{ obj.pk }} </td>
+        <td> {{ obj.genre_name }} </td>
+        <td> {{ obj.genre_description }} </td>
+        <td>
+            <a href = "/genre_upd/{{ obj.pk }}">update</a> 
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock BODY %}

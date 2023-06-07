@@ -15,24 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from directories import views
+from django.urls import path, include
+from home import views as home_views
 
 
 urlpatterns = [
-    path('templ/', views.home_page),
     path('admin/', admin.site.urls),
-    path('added/', views.success_page),
-    path('author_cbv/<int:pk>', views.AuthorView.as_view()),
-    path('author/<int:pk>', views.view_Author),
-    path('serie/<int:pk>', views.view_Serie),
-    path('genre/<int:pk>', views.view_Genre),
-    path('publisher/<int:pk>', views.view_Publisher),
-    path('author_delete/<int:pk>', views.delete_Author),
-    path('serie_delete/<int:pk>', views.delete_Serie),
-    path('genre_delete/<int:pk>', views.delete_Genre),
-    path('publisher_delete/<int:pk>', views.delete_Publisher),
-    path('author_add_cbv/', views.AuthorCreateView.as_view()),
-    path('author_upd_cbv/<int:pk>', views.AuthorUpdateView.as_view()),
-    path('', views.HomePage.as_view()),
+    path('directories/', include('directories.urls', namespace ='directories')),
+    path('', home_views.HomePage.as_view(), name="Home Page"),
+
 ]

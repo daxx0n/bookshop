@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block TITLE %} Delete publisher {% endblock TITLE %}
+
+{% block BODY %}
+
+<h1> {{ greeting }} </h1>
+<h1>Publisher # {{ object.pk }}</h1>
+<b> Publisher's name </b> {{ object.publisher_name }}
+<form action="" method="post">
+    {% csrf_token $%}
+    {{ form.as_p }}
+    <button type="submit">Delete</button>
+</form>
+
+{% endblock BODY %}  
