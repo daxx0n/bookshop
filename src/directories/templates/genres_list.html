@@ -16,7 +16,9 @@
         <td> {{ obj.pk }} </td>
         <td> {{ obj.genre_name }} </td>
         <td> {{ obj.genre_description }} </td>
-        <td> <a href = "/genre_upd/{{ obj.pk }}">update</a> </td>
+        <td>
+            <a href = "/genre_upd/{{ obj.pk }}">update</a> 
+        </td>
     </tr>
     {% endfor %}
 </table>

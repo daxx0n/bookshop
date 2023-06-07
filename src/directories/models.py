@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 
 # Create your models here.
 
@@ -8,20 +9,23 @@ class Author(models.Model):
             max_length = 15,
             null = False,
             blank = False,
-            default = "Author's firstname"
+            default = "Author's firstname",
+            help_text= "Add Author's name, max len = 15"
     )
     author_lastname = models.CharField(
             verbose_name = 'Author Lastname',
             max_length=15,
             null = False,
             blank = False,
-            default = "Author's lastname"
+            default = "Author's lastname",
+            help_text= "Add Author's lastname, max len = 15"
     )
     def __str__(self):
         return str(self.author_lastname)+ " " + str(self.author_firstname)+ "."
  
     def get_absolute_url(self):
-        return "/success_page"
+        return reverse_lazy ('directories:Success_Page')
+
     
 
 class Serie(models.Model):
@@ -40,6 +44,9 @@ class Serie(models.Model):
     )  
     def __str__(self):
         return (self.serie_name)
+
+    def get_absolute_url(self):
+        return reverse_lazy ('directories:Success_Page')
     
 class Genre(models.Model):
     genre_name = models.CharField(
@@ -57,6 +64,9 @@ class Genre(models.Model):
     )
     def __str__(self):
         return (self.genre_name)
+
+    def get_absolute_url(self):
+        return reverse_lazy ('directories:Success_Page')
     
 class Publisher(models.Model):
     publisher_name = models.CharField(
@@ -74,3 +84,6 @@ class Publisher(models.Model):
     )
     def __str__(self):
         return (self.publisher_name)
+
+    def get_absolute_url(self):
+        return reverse_lazy ('directories:Success_Page')

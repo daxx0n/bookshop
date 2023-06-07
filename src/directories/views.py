@@ -5,8 +5,6 @@ from . import models
 from . import forms
 
 
-# Create your views here.
-
 # Home page
 
 class HomePage (generic.TemplateView):
@@ -29,7 +27,6 @@ class AuthorCreateView (generic.CreateView):
         'author_firstname', 'author_lastname'
     ]
     template_name = "add.html"
-    success_url = "/success"
     
 class AuthorUpdateView (generic.UpdateView):
     model = models.Author
@@ -37,12 +34,10 @@ class AuthorUpdateView (generic.UpdateView):
         'author_firstname', 'author_lastname'
     ]
     template_name = "update.html"
-    success_url = "/success"
     
 class AuthorDeleteView (generic.DeleteView):
     model = models.Author
     template_name = "delete_author.html"
-    success_url = "/success"
     
 # Serie
 
@@ -61,7 +56,6 @@ class SerieCreateView (generic.CreateView):
         'serie_name', 'serie_description'
     ]
     template_name = "add.html"
-    success_url = "/success"
     
 class SerieUpdateView (generic.UpdateView):
     model = models.Serie
@@ -69,12 +63,10 @@ class SerieUpdateView (generic.UpdateView):
         'serie_name', 'serie_description'
     ]
     template_name = "update.html"
-    success_url = "/success"
  
 class SerieDeleteView (generic.DeleteView):
     model = models.Serie
     template_name = "delete_series.html"
-    success_url = "/success"  
      
 # Genres
 
@@ -93,7 +85,6 @@ class GenreCreateView (generic.CreateView):
         'genre_name', 'genre_description'
     ]
     template_name = "add.html"
-    success_url = "/success"
     
 class GenreUpdateView (generic.UpdateView):
     model = models.Genre
@@ -101,12 +92,10 @@ class GenreUpdateView (generic.UpdateView):
         'genre_name', 'genre_description'
     ]
     template_name = "update.html"
-    success_url = "/success"   
-
+  
 class GenreDeleteView (generic.DeleteView):
     model = models.Serie
-    template_name = "delete_genres.html"
-    success_url = "/success"  
+    template_name = "delete_genres.html"  
     
 #Publishers 
 
@@ -125,7 +114,6 @@ class PublisherCreateView (generic.CreateView):
         'publisher_name', 'publisher_description'
     ]
     template_name = "add.html"
-    success_url = "/success"
     
 class PublisherUpdateView (generic.UpdateView):
     model = models.Publisher
@@ -133,14 +121,13 @@ class PublisherUpdateView (generic.UpdateView):
         'publisher_name', 'publisher_description'
     ]
     template_name = "update.html"
-    success_url = "/success"  
+ 
     
 class PublisherDeleteView (generic.DeleteView):
     model = models.Publisher
     template_name = "delete_publishers.html"
-    success_url = "/success"   
+  
      
-
 # Success page
 
 def success_page(request):
