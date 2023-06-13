@@ -21,7 +21,7 @@ from home import views as home_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('directories/', include('directories.urls', namespace ='directories')),
+    path('directories/', include('directories.urls', namespace ='directories'), name = "directories"),
     path('', home_views.HomePage.as_view(), name="Home Page"),
 
 ]

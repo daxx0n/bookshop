@@ -50,6 +50,7 @@ atlassian-ide-plugin.xml
 *.py[cod] 
 *$py.class 
 local_settings.py
+settings.py
 
 # Distribution / packaging 
 .Python build/ 
