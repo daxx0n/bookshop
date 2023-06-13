@@ -4,6 +4,11 @@ from django.urls import reverse_lazy
 # Create your models here.
 
 class Author(models.Model):
+    picture = models.ImageField(
+            verbose_name="Author picture",
+            upload_to="uploads/%Y/%m/%d/"
+    )
+    
     author_firstname = models.CharField(
             verbose_name = 'Author Name',
             max_length = 15,

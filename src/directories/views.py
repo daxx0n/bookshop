@@ -5,11 +5,6 @@ from . import models
 from . import forms
 
 
-# Home page
-
-class HomePage (generic.TemplateView):
-    template_name = "home_page.html"
-
 #Author
 
 class AuthorListView (generic.ListView):
