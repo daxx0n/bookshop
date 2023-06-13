@@ -19,14 +19,14 @@ class AuthorView (generic.DetailView):
 class AuthorCreateView (generic.CreateView):
     model = models.Author
     fields = [
-        'author_firstname', 'author_lastname'
+        'picture', 'author_firstname', 'author_lastname', 'author_bio'
     ]
     template_name = "add.html"
     
 class AuthorUpdateView (generic.UpdateView):
     model = models.Author
     fields = [
-        'author_firstname', 'author_lastname'
+        'picture', 'author_firstname', 'author_lastname', 'author_bio'
     ]
     template_name = "update.html"
     
