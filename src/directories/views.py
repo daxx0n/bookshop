@@ -4,6 +4,22 @@ from django.views import generic
 from . import models
 from . import forms
 
+def resizer (image):
+    # import os, sys
+# import Image
+
+# size = 128, 128
+
+# for infile in sys.argv[1:]:
+#     outfile = os.path.splitext(infile)[0] + ".thumbnail"
+#     if infile != outfile:
+#         try:
+#             im = Image.open(infile)
+#             im.thumbnail(size, Image.Resampling.LANCZOS)
+#             im.save(outfile, "JPEG")
+#         except IOError:
+#             print "cannot create thumbnail for '%s'" % infile
+
 
 #Author
 
@@ -23,6 +39,10 @@ class AuthorCreateView (generic.CreateView):
     ]
     template_name = "add.html"
     
+    def get_success_url(self) -> str:
+        print(self.object.picture)
+        return super().get_success_url()
+    
 class AuthorUpdateView (generic.UpdateView):
     model = models.Author
     fields = [
@@ -33,6 +53,7 @@ class AuthorUpdateView (generic.UpdateView):
 class AuthorDeleteView (generic.DeleteView):
     model = models.Author
     template_name = "delete_author.html"
+    success_url = "/directories/success/"
     
 # Serie
 
@@ -62,6 +83,7 @@ class SerieUpdateView (generic.UpdateView):
 class SerieDeleteView (generic.DeleteView):
     model = models.Serie
     template_name = "delete_series.html"
+    success_url = "/directories/success/"
      
 # Genres
 
@@ -91,6 +113,7 @@ class GenreUpdateView (generic.UpdateView):
 class GenreDeleteView (generic.DeleteView):
     model = models.Serie
     template_name = "delete_genres.html"  
+    success_url = "/directories/success/"
     
 #Publishers 
 
@@ -121,6 +144,7 @@ class PublisherUpdateView (generic.UpdateView):
 class PublisherDeleteView (generic.DeleteView):
     model = models.Publisher
     template_name = "delete_publishers.html"
+    success_url = "/directories/success/"
   
      
 # Success page
@@ -131,3 +155,4 @@ def success_page(request):
         template_name = "success_page.html",
         context = {"message": "The object was created/updated or deleted succefully!"}
         )
+
