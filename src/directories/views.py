@@ -6,28 +6,10 @@ from . import models
 from . import forms
 
 def resizer (image):
-<<<<<<< HEAD
     extention = image.file.name.split('.')[-1]
     im = Image.open(image.file.name)
     print(image.file.name)
     # import os, sys
-=======
-    # import os, sys
-# import Image
-
-# size = 128, 128
-
-# for infile in sys.argv[1:]:
-#     outfile = os.path.splitext(infile)[0] + ".thumbnail"
-#     if infile != outfile:
-#         try:
-#             im = Image.open(infile)
-#             im.thumbnail(size, Image.Resampling.LANCZOS)
-#             im.save(outfile, "JPEG")
-#         except IOError:
-#             print "cannot create thumbnail for '%s'" % infile
-
->>>>>>> 51e6b9f9a642814dfd46cb14e35b9a956157a4a8
 
 #Author
 
@@ -48,11 +30,7 @@ class AuthorCreateView (generic.CreateView):
     template_name = "add.html"
     
     def get_success_url(self) -> str:
-<<<<<<< HEAD
         resizer(self.object.picture)
-=======
-        print(self.object.picture)
->>>>>>> 51e6b9f9a642814dfd46cb14e35b9a956157a4a8
         return super().get_success_url()
     
 class AuthorUpdateView (generic.UpdateView):
