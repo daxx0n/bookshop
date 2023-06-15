@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
+from PIL import Image
 from . import models
 from . import forms
 
-
-# Home page
-
-class HomePage (generic.TemplateView):
-    template_name = "home_page.html"
+def resizer (image):
+    extention = image.file.name.split('.')[-1]
+    im = Image.open(image.file.name)
+    print(image.file.name)
+    # import os, sys
 
 #Author
 
@@ -24,20 +25,25 @@ class AuthorView (generic.DetailView):
 class AuthorCreateView (generic.CreateView):
     model = models.Author
     fields = [
-        'author_firstname', 'author_lastname'
+        'picture', 'author_firstname', 'author_lastname', 'author_bio'
     ]
     template_name = "add.html"
+    
+    def get_success_url(self) -> str:
+        resizer(self.object.picture)
+        return super().get_success_url()
     
 class AuthorUpdateView (generic.UpdateView):
     model = models.Author
     fields = [
-        'author_firstname', 'author_lastname'
+        'picture', 'author_firstname', 'author_lastname', 'author_bio'
     ]
     template_name = "update.html"
     
 class AuthorDeleteView (generic.DeleteView):
     model = models.Author
     template_name = "delete_author.html"
+    success_url = "/directories/success/"
     
 # Serie
 
@@ -67,6 +73,7 @@ class SerieUpdateView (generic.UpdateView):
 class SerieDeleteView (generic.DeleteView):
     model = models.Serie
     template_name = "delete_series.html"
+    success_url = "/directories/success/"
      
 # Genres
 
@@ -96,6 +103,7 @@ class GenreUpdateView (generic.UpdateView):
 class GenreDeleteView (generic.DeleteView):
     model = models.Serie
     template_name = "delete_genres.html"  
+    success_url = "/directories/success/"
     
 #Publishers 
 
@@ -126,6 +134,7 @@ class PublisherUpdateView (generic.UpdateView):
 class PublisherDeleteView (generic.DeleteView):
     model = models.Publisher
     template_name = "delete_publishers.html"
+    success_url = "/directories/success/"
   
      
 # Success page
@@ -136,3 +145,4 @@ def success_page(request):
         template_name = "success_page.html",
         context = {"message": "The object was created/updated or deleted succefully!"}
         )
+

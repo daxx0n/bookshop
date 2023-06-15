@@ -14,6 +14,21 @@ class AddAuthorForm(forms.Form):
         required=True,
         label="pls add an author lastname"
     )
+    author_bio = forms.CharField( 
+        max_length=50, 
+        required=True,
+        label="pls add an author biography"
+    )
     def save (self):
         models.Author.objects.create()
+
+class AuthorModelForm(forms.ModelForm):
+    class Meta:
+        model = models.Author
+        fields = (
+            'picture',
+            'author_firstname', 
+            'author_lastname',
+            'author_bio'
+        )
         

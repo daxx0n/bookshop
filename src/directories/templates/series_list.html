@@ -4,6 +4,12 @@
 
 {% block BODY %}
 
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col-8">
+
 <table class="table table-bordered">
     <tr>
         <th>pk</th>
@@ -25,7 +31,9 @@
     {% endfor %}
 </table>
 
-
+<a class="btn btn-primary" href="/directories/serie_add/" role="button">Add New</a>
+<br>
+<br>
 
 <div class="pagination">
     <span class="step-links">
@@ -43,6 +51,12 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
+</div>
+
+        </div>
+        <div class="col">
+        </div>
+    </div>
 </div>
 
 {% endblock BODY %}
