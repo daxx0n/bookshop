@@ -11,12 +11,12 @@ def resizer (image):
     extention = image.file.name.split('.')[-1]
     BASE_DIR = Path(image.file.name).resolve().parent
     file_name = Path(image.file.name).resolve().name.split('.')
-    m_basewidth = 150
-    im = Image.open(image.file.name)
-    wpercent = (m_basewidth/float(im.size[0]))
-    hsize = int((float(im.size[1])*float(wpercent)))
-    im.thumbnail ((m_basewidth ,hsize), Image.Resampling.LANCZOS)
-    im.save(str(BASE_DIR / ''.join(file_name[:-1])) + '150.' + extention)
+    for m_basewidth in [150, 40]:
+        im = Image.open(image.file.name)
+        wpercent = (m_basewidth/float(im.size[0]))
+        hsize = int((float(im.size[1])*float(wpercent)))
+        im.thumbnail ((m_basewidth ,hsize), Image.Resampling.LANCZOS)
+        im.save(str(BASE_DIR / '.'.join(file_name[:-1])) + f'_{m_basewidth}_.' + extention)
 
 
 #Author

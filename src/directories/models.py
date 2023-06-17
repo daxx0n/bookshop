@@ -38,8 +38,18 @@ class Author(models.Model):
     def get_absolute_url(self):
         return reverse_lazy ('directories:Success_Page')
 
-    
+    def author_picture_med (self):
+        original_url = self.picture.url
+        new_url = original_url.split('.')
+        picture_url = ".".join(new_url[:-1]) + "_150_." + new_url[-1]
+        return picture_url
 
+    def author_picture_small (self):
+        original_url = self.picture.url
+        new_url = original_url.split('.')
+        picture_url = ".".join(new_url[:-1]) + "_40_." + new_url[-1]
+        return picture_url
+    
 class Serie(models.Model):
     serie_name = models.CharField(
             verbose_name = 'Serie',
