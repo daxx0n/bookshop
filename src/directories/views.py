@@ -1,23 +1,9 @@
+from django.forms.models import BaseModelForm
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
-from pathlib import Path
-from PIL import Image
 from . import models
 from . import forms
-
-
-def resizer (image):
-    extention = image.file.name.split('.')[-1]
-    BASE_DIR = Path(image.file.name).resolve().parent
-    file_name = Path(image.file.name).resolve().name.split('.')
-    for m_basewidth in [150, 40]:
-        im = Image.open(image.file.name)
-        wpercent = (m_basewidth/float(im.size[0]))
-        hsize = int((float(im.size[1])*float(wpercent)))
-        im.thumbnail ((m_basewidth ,hsize), Image.Resampling.LANCZOS)
-        im.save(str(BASE_DIR / '.'.join(file_name[:-1])) + f'_{m_basewidth}_.' + extention)
-
 
 #Author
 
@@ -32,21 +18,23 @@ class AuthorView (generic.DetailView):
 
 class AuthorCreateView (generic.CreateView):
     model = models.Author
-    fields = [
-        'picture', 'author_firstname', 'author_lastname', 'author_bio'
-    ]
+    form_class = forms.AuthorModelForm
     template_name = "add.html"
     
     def get_success_url(self) -> str:
-        resizer(self.object.picture)
+        self.object.picture_resizer()
         return super().get_success_url()
     
 class AuthorUpdateView (generic.UpdateView):
     model = models.Author
-    fields = [
-        'picture', 'author_firstname', 'author_lastname', 'author_bio'
-    ]
+    form_class = forms.AuthorModelForm
     template_name = "update.html"
+    
+    def form_valid(self, form):
+        if form.has_changed():
+            if 'picture' in form.changed_data:
+                print (form.changed_data)
+        return super().form_valid(form)
     
 class AuthorDeleteView (generic.DeleteView):
     model = models.Author

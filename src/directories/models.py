@@ -1,10 +1,11 @@
+from pathlib import Path
 from django.db import models
 from django.urls import reverse_lazy
+from PIL import Image
 
 # Create your models here.
 
-class Author(models.Model):
-        
+class Author(models.Model): 
     picture = models.ImageField(
             verbose_name="Author picture",
             upload_to="uploads/%Y/%m/%d/"
@@ -49,6 +50,17 @@ class Author(models.Model):
         new_url = original_url.split('.')
         picture_url = ".".join(new_url[:-1]) + "_40_." + new_url[-1]
         return picture_url
+
+    def picture_resizer (self):
+        extention = self.picture.file.name.split('.')[-1]
+        BASE_DIR = Path(self.picture.file.name).resolve().parent
+        file_name = Path(self.picture.file.name).resolve().name.split('.')
+        for m_basewidth in [150, 40]:
+                im = Image.open(self.picture.file.name)
+                wpercent = (m_basewidth/float(im.size[0]))
+                hsize = int((float(im.size[1])*float(wpercent)))
+                im.thumbnail ((m_basewidth ,hsize), Image.Resampling.LANCZOS)
+                im.save(str(BASE_DIR / '.'.join(file_name[:-1])) + f'_{m_basewidth}_.' + extention)
     
 class Serie(models.Model):
     serie_name = models.CharField(
