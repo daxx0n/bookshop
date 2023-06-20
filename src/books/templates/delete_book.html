@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block TITLE %} Delete book {% endblock TITLE %}
+
+{% block BODY %}
+
+<h1> {{ greeting }} </h1>
+<b> Delete book {{ object.book_name }}? </b>
+<form action="" method="post">
+    {% csrf_token $%}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-danger" >Delete</button>
+</form>
+
+{% endblock BODY %}

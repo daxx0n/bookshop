@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block TITLE %} Book view {% endblock TITLE %}
+
+{% block BODY %}
+
+<h1>Book # {{ object.pk }}</h1>
+<b> Book name </b> {{ object.book_name }}
+<br>
+<b> Book price </b> {{ object.book_price }}
+<br>
+<b> Book author </b> {{ object.book_author }}
+<div class="card" style="width: 18rem;">
+    <img src="{{ object.picture.url }}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{object.book_name}}</h5>
+      <p class="card-text">{{object.book_price}}</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div>
+
+  <img src="{{ object.picture.url }}" width="{object.picture.width}" class="card-img-top" alt="...">
+  <img src="{{ object.book_picture_med }}" width="150" alt="..."> <br>
+  <img src="{{ object.book_picture_small }}" width="40"  alt="...">
+
+
+{% endblock BODY %}
