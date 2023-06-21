@@ -1,28 +1,16 @@
 from django.db import models
+import datetime
+from django.core.validators import MaxValueValidator, MinValueValidator
 from pathlib import Path
 from PIL import Image
 from django.urls import reverse_lazy
 from directories.models import Author, Serie, Genre, Publisher
-# Create your models here.
-# 4.1.1. Название книги
-# 4.1.2. Фото обложки
-# 4.1.3. Цена (BYN)
-# 4.1.4. Авторы книги (может содержать несколько авторов) - справочник
-# 4.1.5  Серия - справочник
-# 4.1.6. Жанры (один или несколько жанров) - справочник
-# 4.1.7. Год издания
-# 4.1.8. Страниц
-# 4.1.9. Переплет
-# 4.1.10. Формат
-# 4.1.11. ISBN
-# 4.1.12. Вес (гр)
-# 4.1.13. Возрастные ограничения
-# 4.1.14. Издательство - справочник
-# 4.1.15. Количество книг в наличии
+
 # 4.1.16. Активный (доступен для заказа, Да/Нет)
 # 4.1.17. Рейтинг (0 - 10)
 # 4.1.18. Дата внесения в каталог
 # 4.1.19. Дата последнего изменения карточки
+
 class Books(models.Model): 
     book_name = models.CharField(
         verbose_name="Book's name",
@@ -46,7 +34,71 @@ class Books(models.Model):
         null = True,
         on_delete=models.CASCADE
     )
-    
+    book_serie = models.ForeignKey(
+        "directories.Serie", 
+        verbose_name=("Serie"), 
+        blank = True,
+        null = True,
+        on_delete=models.CASCADE
+    )
+    book_genre = models.ForeignKey(
+        "directories.Genre", 
+        verbose_name=("Genre"), 
+        blank = True,
+        null = True,
+        on_delete=models.CASCADE
+    )
+    book_year = models.PositiveIntegerField(
+        verbose_name=("Year"), 
+        max_length = 4,
+        blank = True,
+        null = True
+    )
+    book_page = models.PositiveIntegerField(
+        verbose_name=("Pages"), 
+        max_length = 5,
+        blank = True,
+        null = True
+    )
+    book_cover = models.CharField(
+        verbose_name=("Cover"),
+        max_length = 5,
+        blank = True,
+        null = True
+    )
+    book_isbn = models.CharField(
+        verbose_name=("ISBN"), 
+        max_length = 17,
+        blank = True,
+        null = True
+    )
+    book_weight = models.PositiveIntegerField(
+        verbose_name=("Weight"), 
+        max_length = 4,
+        blank = True,
+        null = True
+    )
+    book_age = models.CharField(
+        verbose_name=("Age Restrictions"), 
+        max_length = 3,
+        blank = True,
+        null = True
+    )
+    book_publisher = models.ForeignKey(
+        "directories.Publisher", 
+        verbose_name=("Publisher"), 
+        blank = True,
+        null = True,
+        on_delete=models.CASCADE
+    )
+    book_quantity = models.PositiveIntegerField(
+        verbose_name=("Age Restrictions"), 
+        max_length = 3,
+        blank = True,
+        null = True
+    )
+
+
     def __str__(self):
         return str(self.book_name)
  
