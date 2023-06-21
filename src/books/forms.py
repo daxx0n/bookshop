@@ -20,5 +20,7 @@ class BookModelForm(forms.ModelForm):
             'book_weight',
             'book_age',
             'book_publisher',
-            'book_quantity'
+            'book_quantity',
+            'is_active',
+            'book_rating',        
         )

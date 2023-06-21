@@ -34,7 +34,7 @@ class Author(models.Model):
             help_text= "Author's biography, max len = 300"
     )
     def __str__(self):
-        return str(self.author_lastname)+ " " + str(self.author_firstname)+ "."
+        return str(self.author_lastname)+ " " + str(self.author_firstname)
  
     def get_absolute_url(self):
         return reverse_lazy ('directories:Success_Page')

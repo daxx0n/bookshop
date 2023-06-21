@@ -1,5 +1,5 @@
 from django.db import models
-import datetime
+from datetime import date
 from django.core.validators import MaxValueValidator, MinValueValidator
 from pathlib import Path
 from PIL import Image
@@ -25,7 +25,8 @@ class Books(models.Model):
     book_price = models.DecimalField(
         verbose_name= "Book's price",
         decimal_places=2,
-        max_digits=4
+        max_digits=4,
+        validators=[MinValueValidator(0)]
     )
     book_author = models.ForeignKey(
         "directories.Author", 
@@ -50,13 +51,12 @@ class Books(models.Model):
     )
     book_year = models.PositiveIntegerField(
         verbose_name=("Year"), 
-        max_length = 4,
         blank = True,
-        null = True
+        null = True,
+        validators=[MaxValueValidator(2023)]
     )
     book_page = models.PositiveIntegerField(
         verbose_name=("Pages"), 
-        max_length = 5,
         blank = True,
         null = True
     )
@@ -74,9 +74,9 @@ class Books(models.Model):
     )
     book_weight = models.PositiveIntegerField(
         verbose_name=("Weight"), 
-        max_length = 4,
         blank = True,
-        null = True
+        null = True,
+        validators=[MinValueValidator(1)]
     )
     book_age = models.CharField(
         verbose_name=("Age Restrictions"), 
@@ -92,12 +92,20 @@ class Books(models.Model):
         on_delete=models.CASCADE
     )
     book_quantity = models.PositiveIntegerField(
-        verbose_name=("Age Restrictions"), 
-        max_length = 3,
+        verbose_name=("Book quantity"), 
         blank = True,
         null = True
     )
-
+    is_active = models.BooleanField(
+        default=False,
+    )
+    book_rating = models.DecimalField( 
+        verbose_name=("Book rating"),
+        max_digits=4,
+        decimal_places=2, 
+        default=0,
+        validators=[MaxValueValidator(10), MinValueValidator(0)]
+    )
 
     def __str__(self):
         return str(self.book_name)
