@@ -2,6 +2,7 @@ from django.db import models
 from datetime import date
 from django.core.validators import MaxValueValidator, MinValueValidator
 from pathlib import Path
+from django.utils import timezone
 from PIL import Image
 from django.urls import reverse_lazy
 from directories.models import Author, Serie, Genre, Publisher
@@ -106,6 +107,13 @@ class Books(models.Model):
         default=0,
         validators=[MaxValueValidator(10), MinValueValidator(0)]
     )
+    created_at = models.DateTimeField(
+        blank=True
+    )
+    updated_at = models.DateTimeField(
+        blank=True
+    )
+    
 
     def __str__(self):
         return str(self.book_name)
