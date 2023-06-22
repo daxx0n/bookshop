@@ -108,11 +108,11 @@ class Books(models.Model):
         validators=[MaxValueValidator(10), MinValueValidator(0)]
     )
     created_at = models.DateTimeField(
-        blank=True
-    )
+        auto_now_add=True)
+    
     updated_at = models.DateTimeField(
-        blank=True
-    )
+        auto_now=True
+        )
     
 
     def __str__(self):

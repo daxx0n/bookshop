@@ -21,7 +21,7 @@
 <br>
 <b> Book cover </b> {{ object.book_cover }}
 <br>
-<b> Book isbn </b> {{ object.book_isbn }}
+<b> Book ISBN </b> {{ object.book_isbn }}
 <br>
 <b> Book weight </b> {{ object.book_weight }} грамм
 <br>
@@ -44,9 +44,9 @@
     <div class="card-body">
       <h5 class="card-title">{{object.book_name}}</h5>
       <p class="card-text">{{object.book_price}}</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <a href={% url 'books:Book View' pk=object.pk %} class="btn btn-primary">See book</a>
     </div>
-  </div>
+</div>
 
   <img src="{{ object.picture.url }}" width="{object.picture.width}" class="card-img-top" alt="...">
   <img src="{{ object.book_picture_med }}" width="150" alt="..."> <br>

@@ -3,7 +3,7 @@ from books import views
 app_name = 'books'
 
 urlpatterns = [
-    path('book_list_view/', views.BookListView.as_view(), name="ABook list"),
+    path('book_list_view/', views.BookListView.as_view(), name="Book list"),
     path('book_view/<int:pk>', views.BookView.as_view(), name="Book View"),
     path('book_delete/<int:pk>', views.BookDeleteView.as_view(), name="Book Delete"),
     path('book_add/', views.BookCreateView.as_view(), name="Book Add"),
