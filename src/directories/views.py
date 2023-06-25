@@ -2,6 +2,8 @@ from django.forms.models import BaseModelForm
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.urls import reverse_lazy
 from . import models
 from . import forms
 
@@ -16,19 +18,23 @@ class AuthorView (generic.DetailView):
     template_name = "view_authors.html"
     model = models.Author
 
-class AuthorCreateView (generic.CreateView):
+class AuthorCreateView (generic.CreateView, PermissionRequiredMixin):
     model = models.Author
     form_class = forms.AuthorModelForm
     template_name = "add.html"
+    permission_required = [
+        "directories.create_author"
+    ]
     
     def get_success_url(self) -> str:
         self.object.picture_resizer()
         return super().get_success_url()
     
-class AuthorUpdateView (generic.UpdateView):
+class AuthorUpdateView (LoginRequiredMixin, generic.UpdateView):
     model = models.Author
     form_class = forms.AuthorModelForm
     template_name = "update.html"
+    login_url = reverse_lazy("staff:login")
     
     def form_valid(self, form):
         if form.has_changed():
