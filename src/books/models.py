@@ -26,7 +26,7 @@ class Books(models.Model):
     book_price = models.DecimalField(
         verbose_name= "Book's price",
         decimal_places=2,
-        max_digits=4,
+        max_digits=6,
         validators=[MinValueValidator(0)]
     )
     book_author = models.ForeignKey(
