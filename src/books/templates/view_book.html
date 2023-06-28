@@ -44,7 +44,13 @@
     <div class="card-body">
       <h5 class="card-title">{{object.book_name}}</h5>
       <p class="card-text">{{object.book_price}}</p>
-      <a href={% url 'books:Book View' pk=object.pk %} class="btn btn-primary">See book</a>
+      <a href={% url 'books:Book View' pk=object.pk %} class="btn btn-primary">See book</a><br>
+      <div class="row g-1">
+        <div class="col-auto">
+            <input type="number" id="add-to-cart" class="form-control" min="1", max="100", value="1">
+            <div class="col-auto"></div>
+            <a href={% url 'books:Book View' pk=object.pk %} class="btn btn-danger">Add to cart</a>
+      <div class="row g-1">
     </div>
 </div>
 

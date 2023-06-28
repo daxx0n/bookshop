@@ -12,7 +12,7 @@ from . import forms
 class BookListView (generic.ListView):
     template_name = "book_list.html"
     model = models.Books
-    paginate_by = 3
+    paginate_by = 10
 
 class BookView (generic.DetailView):
     template_name = "view_book.html"
@@ -32,11 +32,9 @@ class BookUpdateView (generic.UpdateView):
     form_class = forms.BookModelForm
     template_name = "update.html"
     
-    def form_valid(self, form):
-        if form.has_changed():
-            if 'picture' in form.changed_data:
-                print (form.changed_data)
-        return super().form_valid(form)
+    def get_success_url(self) -> str:
+        self.object.picture_resizer()
+        return super().get_success_url()
     
 class BookDeleteView (generic.DeleteView):
     model = models.Books

@@ -7,10 +7,6 @@ from PIL import Image
 from django.urls import reverse_lazy
 from directories.models import Author, Serie, Genre, Publisher
 
-# 4.1.16. Активный (доступен для заказа, Да/Нет)
-# 4.1.17. Рейтинг (0 - 10)
-# 4.1.18. Дата внесения в каталог
-# 4.1.19. Дата последнего изменения карточки
 
 class Books(models.Model): 
     book_name = models.CharField(
@@ -21,7 +17,8 @@ class Books(models.Model):
     )
     picture = models.ImageField(
         verbose_name="Book picture",
-        upload_to="uploads/%Y/%m/%d/"
+        upload_to="uploads/%Y/%m/%d/",
+        blank=True
     )
     book_price = models.DecimalField(
         verbose_name= "Book's price",
@@ -141,5 +138,5 @@ class Books(models.Model):
                 im = Image.open(self.picture.file.name)
                 wpercent = (m_basewidth/float(im.size[0]))
                 hsize = int((float(im.size[1])*float(wpercent)))
-                im.thumbnail ((m_basewidth ,hsize), Image.Resampling.LANCZOS)
+                im.thumbnail ((m_basewidth,hsize), Image.Resampling.LANCZOS)
                 im.save(str(BASE_DIR / '.'.join(file_name[:-1])) + f'_{m_basewidth}_.' + extention)

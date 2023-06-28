@@ -51,7 +51,7 @@ class GoodInCart(models.Model):
         auto_now=True
     )
     def __str__(self) -> str:
-        return f"{self.good.name} x {self.quantity}"
+        return f"{self.good.book_name} x {self.quantity}"
         
 NEW = "NEW"
 OFORMLEN = "Oformlen"
@@ -59,11 +59,11 @@ ATWORK = "At_work"
 VYDAN = "Vydan"
 CLOSED = "Closed"
 STATUSES = [
-    (NEW, "NEW"),
-    (OFORMLEN, "Oformlen"),
-    (ATWORK, "At_work"),
-    (VYDAN, "Vydan"),
-    (CLOSED, "Closed")
+    (NEW, "Новый"),
+    (OFORMLEN, "Оформлен"),
+    (ATWORK, "В работе"),
+    (VYDAN, "Выдан"),
+    (CLOSED, "Закрыт")
 ]
 
 class Order (models.Model):
