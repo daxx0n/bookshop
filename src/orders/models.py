@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from books import models as bmodels
+from books.models import Books
 
 # Create your models here.
 
@@ -25,7 +25,7 @@ class GoodInCart(models.Model):
     )   
     
     good = models.ForeignKey(
-        bmodels.Books,
+        Books,
         verbose_name= "Good",
         on_delete = models.PROTECT
     )
@@ -52,17 +52,38 @@ class GoodInCart(models.Model):
     )
     def __str__(self) -> str:
         return f"{self.good.name} x {self.quantity}"
+        
+NEW = "NEW"
+OFORMLEN = "Oformlen"
+ATWORK = "At_work"
+VYDAN = "Vydan"
+CLOSED = "Closed"
+STATUSES = [
+    (NEW, "NEW"),
+    (OFORMLEN, "Oformlen"),
+    (ATWORK, "At_work"),
+    (VYDAN, "Vydan"),
+    (CLOSED, "Closed")
+]
 
 class Order (models.Model):
-    delivery_adress = models.OneToOneField(
+    delivery_adress = models.TextField(
         verbose_name = "Delivery adress"
     )
-    status = models.ForeignKey(
-        pass
+
+
+    status = models.CharField(
+        max_length=8,
+        choices= STATUSES,
+        default=NEW,
+        verbose_name='Order status',
+         
     )
-    cart = models.ForeignKey(
-        Cart
+
+    cart = models.OneToOneField(
+        Cart,
         verbose_name="Cart",
+        on_delete=models.PROTECT
     )
     created = models.DateTimeField(
         verbose_name='created',
