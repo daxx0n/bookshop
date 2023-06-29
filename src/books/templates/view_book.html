@@ -44,19 +44,25 @@
     <div class="card-body">
       <h5 class="card-title">{{object.book_name}}</h5>
       <p class="card-text">{{object.book_price}}</p>
-      <a href={% url 'books:Book View' pk=object.pk %} class="btn btn-primary">See book</a><br>
-      <div class="row g-1">
+      <a href="{% url 'books:Book View' pk=object.pk %}" class="btn btn-primary">See book</a><br>
+      <div class="row">
         <div class="col-auto">
-            <input type="number" id="add-to-cart" class="form-control" min="1", max="100", value="1">
-            <div class="col-auto"></div>
-            <a href={% url 'books:Book View' pk=object.pk %} class="btn btn-danger">Add to cart</a>
-      <div class="row g-1">
+            <button class="btn btn-danger" onclick="addToCart()">add to cart</button>
+        </div>
+        <div class="col-auto">
+          <input type="number" id="add-to-cart" class="form-control" min="1", max="100", value="1">
+        </div>
+      </div>
     </div>
 </div>
 
-  <img src="{{ object.picture.url }}" width="{object.picture.width}" class="card-img-top" alt="...">
-  <img src="{{ object.book_picture_med }}" width="150" alt="..."> <br>
-  <img src="{{ object.book_picture_small }}" width="40"  alt="...">
-
+<script>
+  function addToCart() {
+    console.log("click")
+    quantity = document.getElementById("add-to-cart")
+    console.log(quantity.value)
+    window.location.replace("http://www.w3schools.com");
+  }
+</script>
 
 {% endblock BODY %}
