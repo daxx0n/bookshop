@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block TITLE %} Cart {% endblock TITLE %}
+
+{% block BODY %}
+
+<h1>Cart</h1>
+
+{% comment %} <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Edit</th>
+        <th scope="col">price</th>
+      </tr>
+    </thead>
+    <tbody>
+        {{ object }}
+         {% for good_in_cart in object.goods.all %}
+      <tr>
+        <th scope="row">{{ forloop.counter }} </th>
+        <td>{{ good_in_cart.good}}</td>
+        <td>{{ good_in_cart.quantity}}</td>
+        <td>
+            <button type="button" onclick="deleteGood({{ good_in_cart.good.pk }})" class="btn btn-outline-danger btn-sm">-</button> 
+            <button type="button" onclick="addGood({{ good_in_cart.good.pk}})"class="btn btn-outline-primary btn-sm">+</button> 
+        </td>
+        <td>{{ good_in_cart.price}}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="2">Total:</td>
+        <td colspan="2">{{object.total_quantity}}</td>
+        <td>{{ object.total_price }}</td>
+      </tr>
+    </tbody>
+  </table> {% endcomment %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form | crispy}}
+    <button type = "submit" class="btn btn-danger">Create</button>
+</form>
+
+
+{% endblock BODY %}

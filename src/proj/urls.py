@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('directories/', include('directories.urls', namespace ='directories'), name = "directories"),
     path('staff/', include('staff.urls', namespace ='staff'), name = "staff"),
+    path('orders/', include('orders.urls', namespace ='orders'), name = "orders"),
     path('books/', include('books.urls', namespace ='books'), name = "books"),
     path('', home_views.HomePage.as_view(), name="Home Page"),
 
