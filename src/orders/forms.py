@@ -1,9 +1,8 @@
-from django.forms import ModelForm
+from django import forms
 from . import models
 
-class CreateOrderForm(ModelForm):
-    class Meta:
-        model = models.Order
-        fields = (
-            'delivery_adress',
-        )
+class CreateOrderForm(forms.Form):
+    delivery_address = forms.CharField(
+        required=True, 
+        widget=forms.Textarea
+    )

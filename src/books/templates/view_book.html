@@ -61,7 +61,7 @@
     console.log("click")
     quantity = document.getElementById("add-to-cart")
     console.log(quantity.value)
-    window.location.href = "{% url "orders:view-cart" %}" + "?good_id = {{ object.pk }}&quantity= " + quantity.value);
+    window.location.href = "{% url "orders:view-cart" %}" + "?good_id = {{ object.pk }}&quantity= " + quantity.value;
   }
 </script>
 

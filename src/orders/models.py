@@ -80,8 +80,9 @@ STATUSES = [
 ]
 
 class Order (models.Model):
-    delivery_adress = models.TextField(
-        verbose_name = "Delivery adress"
+    delivery_address = models.TextField(
+        verbose_name = "Delivery address",
+        default = " "
     )
 
 
@@ -92,7 +93,6 @@ class Order (models.Model):
         verbose_name='Order status',
          
     )
-
     cart = models.OneToOneField(
         Cart,
         verbose_name="Cart",
