@@ -1,11 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import views as auth_views, authenticate, login
 from django.http import HttpResponse
-from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
+from .forms import LoginForm, UserRegistrationForm, UserForm, ProfileForm
 from django.urls import reverse_lazy
 from .models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db import transaction
+from django.utils.text import gettext_lazy as _
+
 
 
 
@@ -73,20 +76,22 @@ def register(request):
     return render(request, 'staff/register.html', {'user_form': user_form})
 
 @login_required
-def edit(request):
+@transaction.atomic
+def update_profile(request):
     if request.method == 'POST':
-        user_form = UserEditForm(instance=request.user, data=request.POST)
-        profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
-              user_form.save()
-              profile_form.save()
-              messages.success(request, 'Profile updated successfully')
+            user_form.save()
+            profile_form.save()
+            messages.success(request, _('Ваш профиль был успешно обновлен!'))
+            return redirect('staff:edit')
         else:
-              messages.error(request, 'Error updating your profile')
+            messages.error(request, _('Пожалуйста, исправьте ошибки.'))
     else:
-        user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile)
-        return render(request,
-                      'staff/edit.html',
-                      {'user_form': user_form,
-                       'profile_form': profile_form})
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'staff/edit.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })

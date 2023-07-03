@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block TITLE %}Profile{% endblock TITLE %}
+
+{% block BODY %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    <button type="submit">Сохранить изменения</button>
+  </form>
+
+{% endblock %}
+
+{% endblock BODY %}
