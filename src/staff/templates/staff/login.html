@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
+{% block TITLE %} Login {% endblock TITLE %}
+
 {% block BODY %}
 
 {% if form.errors %}
@@ -32,6 +34,9 @@
 <input type="submit" value="login" class = "btn btn-success">
 <input type="hidden" name="next" value="{{ next }}">
 </form>
+
+<p><a href="{% url "staff:password_reset" %}">Forgot your password?</a></p>
+<p>Don't have an account? <a href="{% url "staff:register" %}">register here</a></p>
 
 {# Assumes you set up the password_reset view in your URLconf #}
 {% comment %} <p><a href="{% url 'password_reset' %}">Lost password?</a></p> {% endcomment %}
