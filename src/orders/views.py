@@ -24,8 +24,12 @@ class CartDetailView(DetailView):
                 "customer":customer
             }           
         )
+        if not cart_pk:
+            self.request.session['cart_id'] = cart.pk
         good_id = self.request.GET.get("good_id")
+        print (good_id)
         quantity= self.request.GET.get("quantity")
+        print (quantity)
         if good_id and quantity:
             quantity = int(quantity)
             good = Books.objects.get (pk=int(good_id))
@@ -42,8 +46,6 @@ class CartDetailView(DetailView):
                 good_in_cart.quantity = good_in_cart.quantity + quantity
                 good_in_cart.price = good_in_cart.price + price*quantity
                 good_in_cart.save() 
-            if created:
-                self.request.session['cart_id'] = cart.pk
         return cart 
     
 class CartAddDeleteItemView(DetailView):
@@ -61,6 +63,8 @@ class CartAddDeleteItemView(DetailView):
                 "customer":customer
             }           
         )
+        if not cart_pk:
+            self.request.session['cart_id'] = cart.pk
         good_id = self.request.GET.get("good")
         action= self.request.GET.get("action")
         if good_id and action and action in ['add', 'delete']:
@@ -68,8 +72,8 @@ class CartAddDeleteItemView(DetailView):
             price = good.book_price
             good_in_cart = get_object_or_404(
                 models.GoodInCart, 
-                cart__pk = cart,
-                good__pk = good,
+                cart__pk = cart.pk,
+                good__pk = good.pk,
             )
             if action == "add":
                 addiction = 1

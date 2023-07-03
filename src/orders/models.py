@@ -28,6 +28,7 @@ class Cart (models.Model):
         for good_in_cart in self.goods.all():
             total_quantity += good_in_cart.quantity
         return total_quantity
+    
 
 class GoodInCart(models.Model):
     cart = models.ForeignKey(
@@ -39,7 +40,7 @@ class GoodInCart(models.Model):
     
     good = models.ForeignKey(
         Books,
-        verbose_name= "books",
+        verbose_name= "Book",
         on_delete = models.PROTECT
     )
     
