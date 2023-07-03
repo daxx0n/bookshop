@@ -68,8 +68,8 @@ class CartAddDeleteItemView(DetailView):
             price = good.book_price
             good_in_cart = get_object_or_404(
                 models.GoodInCart, 
-                cart = cart,
-                good = good,
+                cart__pk = cart,
+                good__pk = good,
             )
             if action == "add":
                 addiction = 1
@@ -102,13 +102,13 @@ class CreateOrder (FormView):
             status = status,
             cart = cart
         )
-        
         del self.request.session["cart_id"]
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cart_id = self.request.session.get("cart_id", -100)
+        
         context['object'] = get_object_or_404(
             models.Cart,
             pk=int(cart_id)

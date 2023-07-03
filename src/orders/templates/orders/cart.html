@@ -39,7 +39,7 @@
     </tbody>
   </table>
   {% if object.goods.all %} 
-  <a href="{% url 'orders:create-order' %}" class="btn btn-outline-primary">Create order</a>
+    <a href="{% url 'orders:create-order' %}" class="btn btn-outline-primary">Create order</a>
   {% endif %}
   <script>
     function addGood(pk) {

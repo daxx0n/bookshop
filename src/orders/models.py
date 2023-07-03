@@ -82,9 +82,8 @@ STATUSES = [
 class Order (models.Model):
     delivery_address = models.TextField(
         verbose_name = "Delivery address",
-        default = " "
+        default = "Enter your adress"
     )
-
 
     status = models.CharField(
         max_length=8,
