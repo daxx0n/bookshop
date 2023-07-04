@@ -1,6 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from .models import Profile
+
+
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -21,9 +23,11 @@ class UserRegistrationForm(forms.ModelForm):
         return cd['password2']
     
 class UserForm(forms.ModelForm):
+    group = forms.ModelChoiceField(queryset=Group.objects.all())
     class Meta:
         model = User
         fields = ('username', 'first_name',  'email')
+
 
 class ProfileForm(forms.ModelForm):
     class Meta:

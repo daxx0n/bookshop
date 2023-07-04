@@ -44,7 +44,7 @@
     <div class="card-body">
       <h5 class="card-title">{{object.book_name}}</h5>
       <p class="card-text">{{object.book_price}}</p>
-      <a href="{% url 'books:Book View' pk=object.pk %}" class="btn btn-primary">See book</a><br>
+      <a href="{% url 'books:book_view' pk=object.pk %}" class="btn btn-primary">See book</a><br>
       <div class="row">
         <div class="col-auto">
             <button class="btn btn-danger" onclick="addToCart()">add to cart</button>

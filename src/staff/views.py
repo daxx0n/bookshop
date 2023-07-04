@@ -12,6 +12,7 @@ from django.utils.text import gettext_lazy as _
 
 
 
+
 # Create your views here.
 
 class LoginView(auth_views.LoginView):
@@ -69,7 +70,6 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             # Save the User object
             new_user.save()
-            profile = Profile.objects.create(user=new_user)
             return render(request, 'staff/register_done.html', {'new_user': new_user})
     else:
         user_form = UserRegistrationForm()

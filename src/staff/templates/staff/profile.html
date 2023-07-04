@@ -1,19 +1,89 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load crispy_forms_tags %}
+
 
 {% block TITLE %}Profile{% endblock TITLE %}
 
+{% block HEAD %}
+
+{% endblock HEAD %}
+
 {% block BODY %}
-
 {% block content %}
+<br><br>
+<div class="container mx-auto">
+    <div class="row" style="margin-left:20%;">
+      <div class="col-sm-12 col-md-12 col-lg-9 pb-4">
+        <div class="card p-4">
+          <h4 class="card-title font-weight-bold text-center">Profile: {{ user.username|title }}</h4>
+            <hr>
+          <div class="card-text">
+            <p class="text-muted mb-0" style="font-size: 12px">Логин:</p>
+            <p>{{ user.username }}</p>
+            {% if account.view_personal_info %}
+              {% if user.email != "" %}
+                <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
+                <p>{{ user.email }}</p>
+              {% endif %}
+              {% if user.first_name != "" %}
+                <p class="text-muted mb-0" style="font-size: 12px">Имя:</p>
+                <p>{{ user.first_name }}</p>
+              {% endif %}
+              {% if user.last_name != "" %}
+                <p class="text-muted mb-0" style="font-size: 12px">Фамилия:</p>
+                <p>{{ user.last_name }}</p>
+              {% endif %}
+                <p class="text-muted mb-0" style="font-size: 12px">Телефон:</p>
+                <p>{{ account.phone }}</p>
+            
+              <p class="text-muted mb-0" style="font-size: 12px">Группа:</p>
+              <p>
+                {% if groups %}
+                    {% for group in groups %}
+                      {{ group.name }}
+                    {% endfor %}
+                {% endif %}
+              </p>
+              <p class="text-muted mb-0" style="font-size: 12px">Домашний адрес:</p>
+              <p>{{ account.address }}</p>
+              {% if account.gender != "" %}
+                <p class="text-muted mb-0" style="font-size: 12px">Пол:</p>
+                <p>{{ account.gender }}</p>
+              {% endif %}
+              
+              
+          {% endif %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    <button type="submit">Сохранить изменения</button>
-  </form>
+              <p class="text-muted mb-0" style="font-size: 12px">Персональные данные:</p>
+                {% if account.view_personal_info %}
+                  <p>Отображать</p>
+                {% else %}
+                  <p>Не отображать</p>
+                {% endif %}
+
+
+              <button class="btn btn-outline-dark" >Изменить данные</button>
+            </form>
+            <br>
+            <form action="{% url 'staff:logout' %}">
+              <button class="btn btn-outline-danger" >Выйти, {{ user }}</button>
+            </form>
+
+            <p class="text-muted mb-0" style="font-size: 12px">Заказы:</p>
+                {% for order in orders %}
+                  <p>
+                    <a href="{% url 'cart:order_details' order.id %}">Заказ №{{ order.id }}</a>
+                  </p>
+                {% empty %}
+                  <p>Заказы отсутствуют</p>
+                {% endfor %}
+
+
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
 
 {% endblock %}
-
 {% endblock BODY %}

@@ -22,7 +22,7 @@ from home import views as home_views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('s-admin/', admin.site.urls),
     path('directories/', include('directories.urls', namespace ='directories'), name = "directories"),
     path('staff/', include('staff.urls', namespace ='staff'), name = "staff"),
     path('orders/', include('orders.urls', namespace ='orders'), name = "orders"),

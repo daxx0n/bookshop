@@ -23,9 +23,9 @@
         <td> {{ obj.book_name}} </td>
         <td>  <img src="{{ obj.book_picture_small }}" width="40" alt="...">  </td>
         <td> 
-            <a href = "{% url "books:Book Update" pk=obj.pk %}"><i class="bi bi-pencil-fill"></i></a>
-            <a href = "{% url "books:Book View" pk=obj.pk %}"><i class="bi bi-eye"></i></a>
-            <a href = "{% url "books:Book Delete" pk=obj.pk %}"><i class="bi bi-trash3"></i></a>
+            <a href = "{% url "books:book_update" pk=obj.pk %}"><i class="bi bi-pencil-fill"></i></a>
+            <a href = "{% url "books:book_view" pk=obj.pk %}"><i class="bi bi-eye"></i></a>
+            <a href = "{% url "books:book_delete" pk=obj.pk %}"><i class="bi bi-trash3"></i></a>
             
         </td>
      </tr>

@@ -12,7 +12,7 @@ from . import forms
 class AuthorListView (generic.ListView):
     template_name = "author_list.html"
     model = models.Author
-    paginate_by = 3
+    paginate_by = 10
 
 class AuthorView (generic.DetailView):
     template_name = "view_authors.html"
@@ -52,7 +52,7 @@ class AuthorDeleteView (generic.DeleteView):
 class SerieListView (generic.ListView):
     template_name = "series_list.html"
     model = models.Serie
-    paginate_by = 3
+    paginate_by = 10
 
 class SerieView (generic.DetailView):
     template_name = "view_series.html"
@@ -82,7 +82,7 @@ class SerieDeleteView (generic.DeleteView):
 class GenreListView (generic.ListView):
     template_name = "genres_list.html"
     model = models.Genre
-    paginate_by = 2
+    paginate_by = 10
 
 class GenreView (generic.DetailView):
     template_name = "view_genres.html"
@@ -112,7 +112,7 @@ class GenreDeleteView (generic.DeleteView):
 class PublisherListView (generic.ListView):
     template_name = "publishers_list.html"
     model = models.Publisher
-    paginate_by = 3
+    paginate_by = 10
 
 class PublisherView (generic.DetailView):
     template_name = "view_publishers.html"
