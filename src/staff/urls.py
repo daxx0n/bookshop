@@ -1,8 +1,7 @@
 from django.urls import path
-from . import views
 from .views import ProfileUpdateView, ProfileDetailView, UserRegisterView, \
     UserLoginView, UserLogoutView, UserPasswordChangeView, UserForgotPasswordView, UserPasswordResetConfirmView,\
-    UserForgotPasswordView, UserPasswordResetConfirmView, UserConfirmEmailView, EmailConfirmationSentView, EmailConfirmedView, EmailConfirmationFailedView
+    UserConfirmEmailView, EmailConfirmationSentView, EmailConfirmedView, EmailConfirmationFailedView
 app_name = 'staff'
 
 

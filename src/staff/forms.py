@@ -1,9 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm, \
+    UserCreationForm, AuthenticationForm
 from .models import Profile
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm, UserCreationForm, AuthenticationForm, SetPasswordForm, PasswordResetForm, SetPasswordForm
-
-
 
 
 class UserForm(forms.ModelForm):
