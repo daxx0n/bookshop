@@ -1,24 +1,26 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import views as auth_views, authenticate, login
-from django.http import HttpResponse
+from django.contrib.auth import login, get_user_model
 from django.urls import reverse_lazy
-from .models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import transaction
 from django.utils.text import gettext_lazy as _
-from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView, LoginView, LogoutView
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, \
+    PasswordChangeView, LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from proj.services.utils import unique_slugify
 from django.views.generic import DetailView, UpdateView, CreateView, View, TemplateView
-from .forms import UserUpdateForm, ProfileUpdateForm, UserLoginForm, UserForgotPasswordForm, UserSetNewPasswordForm, UserForm, ProfileForm, UserPasswordChangeForm, UserRegisterForm
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
 from proj.services.mixins import UserIsNotAuthenticated
-from django.contrib.auth import get_user_model
+from proj.services.utils import unique_slugify
+from .models import Profile
+from .forms import UserUpdateForm, ProfileUpdateForm, UserLoginForm, UserForgotPasswordForm, \
+    UserSetNewPasswordForm, UserForm, ProfileForm, UserPasswordChangeForm, UserRegisterForm
+
+
 
 User = get_user_model()
 
