@@ -42,24 +42,25 @@
 </style>
 {% endblock HEAD %}
 
-    <h1>This is home page!</h1>
-    username {{ user }} <br>
-    anonymous {{ user.is_anonymous }} <br>
-    authenticated {{ user.is_authenticated }} <br>
-    first name {{ user.first_name }} <br>
-    superuser {{ user.is_superuser }} <br>
-    
-    {% if  user.is_authenticated %}
-    authenticated text
-    {% endif %}
-    <br>
-    {% if  user.is_superuser %}
-    superuser text
-    {% endif %}
+
 
   {% block BODY %} 
 
-
+  <h1>This is home page!</h1>
+  username {{ user }} <br>
+  anonymous {{ user.is_anonymous }} <br>
+  authenticated {{ user.is_authenticated }} <br>
+  first name {{ user.first_name }} <br>
+  superuser {{ user.is_superuser }} <br>
+ is stuff {{ user.is_stuff }} <br>
+  
+  {% if  user.is_authenticated %}
+  authenticated text
+  {% endif %}
+  <br>
+  {% if  user.is_superuser %}
+  superuser text
+  {% endif %}
   <div class="container-book">
     {% for object in object_list %}
       <a href="{% url 'books:book_view' pk=object.pk %}" style="text-decoration: none; color: rgba(255, 255, 255, 0.55);">

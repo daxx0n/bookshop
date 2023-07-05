@@ -13,6 +13,9 @@
                 <button type="submit" class="btn btn-dark">Авторизоваться</button>
              </div>
             </form>
+            <br>
+            <p><a href="{% url "staff:password_reset" %}">Забыли пароль?</a></p>
+            <p>Еще нет аккаунта? <a href="{% url "staff:register" %}">Регистрация</a></p>
         </div>
     </div>
 {% endblock BODY %}

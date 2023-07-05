@@ -195,11 +195,13 @@
         {% if request.user.is_authenticated %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Hello, {{ request.user.first_name }}!
+            Привет, {{ request.user.first_name }}!
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'staff:profile_edit' %}">Edit profile</a></li>
             <li><a class="dropdown-item" href="{% url 'staff:logout' %}">Logout</a></li>
+            
+            
           </ul> 
         </li>
         {% endif %}
@@ -216,19 +218,12 @@
 </nav>
 </header>
 
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li class="{{ message.tags }}">
-                {{ message|safe }}
-                <a href="#" class="close">✖</a>
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
+
 
 <main class="flex-shrink-0">
   <div class="container">
+    {% include 'includes/messages.html' %}
+
     {% block BODY %}{% endblock BODY %}   
   </div>
 </main>

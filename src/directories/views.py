@@ -4,6 +4,9 @@ from django.http import HttpResponse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+from proj.services.mixins import StaffRequiredMixin
+
 from . import models
 from . import forms
 
@@ -18,13 +21,12 @@ class AuthorView (generic.DetailView):
     template_name = "view_authors.html"
     model = models.Author
 
-class AuthorCreateView (generic.CreateView, PermissionRequiredMixin):
+class AuthorCreateView (LoginRequiredMixin, generic.CreateView):
     model = models.Author
     form_class = forms.AuthorModelForm
     template_name = "add.html"
-    permission_required = [
-        "directories.create_author"
-    ]
+    login_url = reverse_lazy("staff:login")
+
     
     def get_success_url(self) -> str:
         self.object.picture_resizer()
@@ -35,6 +37,9 @@ class AuthorUpdateView (LoginRequiredMixin, generic.UpdateView):
     form_class = forms.AuthorModelForm
     template_name = "update.html"
     login_url = reverse_lazy("staff:login")
+    context_object_name = 'article'
+    success_message = 'Автор был успешно обновлен'
+
     
     def form_valid(self, form):
         if form.has_changed():
@@ -42,10 +47,18 @@ class AuthorUpdateView (LoginRequiredMixin, generic.UpdateView):
                 print (form.changed_data)
         return super().form_valid(form)
     
-class AuthorDeleteView (generic.DeleteView):
+class AuthorDeleteView (StaffRequiredMixin, generic.DeleteView):
     model = models.Author
     template_name = "delete_author.html"
-    success_url = "/directories/success/"
+    success_url = reverse_lazy('Home Page')
+    context_object_name = 'author'
+    success_message = "Автор был успешно удален!"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Удаление автора: {self.object.title}'
+        return context
+
     
 # Serie
 
