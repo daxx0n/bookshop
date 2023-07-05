@@ -198,9 +198,9 @@
             Hello, {{ request.user.first_name }}!
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'staff:edit' %}">Edit profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'staff:profile_edit' %}">Edit profile</a></li>
             <li><a class="dropdown-item" href="{% url 'staff:logout' %}">Logout</a></li>
-          </ul>
+          </ul> 
         </li>
         {% endif %}
         <li class="nav-item">

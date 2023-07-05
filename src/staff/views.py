@@ -1,80 +1,24 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import views as auth_views, authenticate, login
 from django.http import HttpResponse
-from .forms import LoginForm, UserRegistrationForm, UserForm, ProfileForm
 from django.urls import reverse_lazy
 from .models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import transaction
 from django.utils.text import gettext_lazy as _
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+from .forms import UserForm, ProfileForm
+from proj.services.utils import unique_slugify
+from django.views.generic import DetailView, UpdateView, CreateView
+from .forms import UserUpdateForm, ProfileUpdateForm, UserLoginForm
+from django.contrib.auth.views import LoginView, LogoutView
 
 
 
 
-
-# Create your views here.
-
-class LoginView(auth_views.LoginView):
-     template_name = 'staff/login.html'
-    
-class LogoutView(auth_views.LogoutView):
-     template_name = 'staff/logout.html'
-
-class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
-     template_name = 'staff/password_change_done.html'
-
-class PasswordChangeView(auth_views.PasswordChangeView):
-     template_name = 'staff/password_change.html'
-     success_url = reverse_lazy('staff:password_change_done')
-
-class PasswordResetCompleteView (auth_views.PasswordResetCompleteView):
-     template_name = 'staff/password_reset_complete.html'
-
-class PasswordResetConfirmView (auth_views.PasswordResetConfirmView):
-     template_name = 'staff/password_reset_confirm.html'
-     success_url = reverse_lazy('staff:password_reset_complete')
-
-class PasswordResetDoneView (auth_views.PasswordResetDoneView):
-     template_name = 'staff/password_reset_done.html'    
-
-class PasswordResetView (auth_views.PasswordResetView):
-     template_name = 'staff/password_reset.html'  
-     success_url = reverse_lazy('staff:password_reset_done')
-
-def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(username=cd['username'], password=cd['password'])
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponse('Authenticated successfully')
-                else:
-                    return HttpResponse('Disabled account')
-            else:
-                return HttpResponse('Invalid login')
-    else:
-        form = LoginForm()
-    return render(request, 'staff/login.html', {'form': form})
-
-def register(request):
-    if request.method == 'POST':
-        user_form = UserRegistrationForm(request.POST)
-        if user_form.is_valid():
-            # Create a new user object but avoid saving it yet
-            new_user = user_form.save(commit=False)
-            # Set the chosen password
-            new_user.set_password(user_form.cleaned_data['password'])
-            # Save the User object
-            new_user.save()
-            return render(request, 'staff/register_done.html', {'new_user': new_user})
-    else:
-        user_form = UserRegistrationForm()
-    return render(request, 'staff/register.html', {'user_form': user_form})
-
+from .forms import UserRegisterForm
 @login_required
 @transaction.atomic
 def update_profile(request):
@@ -85,13 +29,98 @@ def update_profile(request):
             user_form.save()
             profile_form.save()
             messages.success(request, _('Ваш профиль был успешно обновлен!'))
-            return redirect('staff:edit')
+            return redirect('staff:profile')
         else:
             messages.error(request, _('Пожалуйста, исправьте ошибки.'))
     else:
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'staff/edit.html', {
+    return render(request, 'staff/profile.html', {
         'user_form': user_form,
         'profile_form': profile_form
     })
+
+class ProfileDetailView(DetailView):
+    """
+    Представление для просмотра профиля
+    """
+    model = Profile
+    context_object_name = 'profile'
+    template_name = 'staff/profile_detail.html'
+    queryset = model.objects.all().select_related('user')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Страница пользователя: {self.object.user.username}'
+        return context
+
+
+class ProfileUpdateView(UpdateView):
+    """
+    Представление для редактирования профиля 
+    """
+    model = Profile
+    form_class = ProfileUpdateForm
+    template_name = 'staff/profile_edit.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user.profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Редактирование профиля пользователя: {self.request.user.username}'
+        if self.request.POST:
+            context['user_form'] = UserUpdateForm(self.request.POST, instance=self.request.user)
+        else:
+            context['user_form'] = UserUpdateForm(instance=self.request.user)
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        user_form = context['user_form']
+        with transaction.atomic():
+            if all([form.is_valid(), user_form.is_valid()]):
+                user_form.save()
+                form.save()
+            else:
+                context.update({'user_form': user_form})
+                return self.render_to_response(context)
+        return super(ProfileUpdateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('staff:profile_detail', kwargs={'slug': self.object.slug})
+
+class UserRegisterView(SuccessMessageMixin, CreateView):
+    """
+    Представление регистрации на сайте с формой регистрации
+    """
+    form_class = UserRegisterForm
+    success_url = reverse_lazy('home')
+    template_name = 'staff/user_register.html'
+    success_message = 'Вы успешно зарегистрировались. Можете войти на сайт!'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Регистрация на сайте'
+        return context
+
+class UserLoginView(SuccessMessageMixin, LoginView):
+    """
+    Авторизация на сайте
+    """
+    form_class = UserLoginForm
+    template_name = 'staff/user_login.html'
+    next_page = 'Home Page'
+    success_message = 'Добро пожаловать на сайт!'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Авторизация на сайте'
+        return context
+
+    
+class UserLogoutView(LogoutView):
+    """
+    Выход с сайта
+    """
+    next_page = 'Home Page'

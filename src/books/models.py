@@ -94,9 +94,16 @@ class Books(models.Model):
         blank = True,
         null = True
     )
-    is_active = models.BooleanField(
-        default=False,
+    ISACTIVE = (
+        ('Y', 'active'),
+        ('N', 'inactive'),
     )
+    is_active = models.CharField(
+        verbose_name = 'Book active',
+        max_length = 4,
+        choices = ISACTIVE
+    )
+    
     book_rating = models.DecimalField( 
         verbose_name=("Book rating"),
         max_digits=4,

@@ -1,35 +1,118 @@
 from django import forms
 from django.contrib.auth.models import User, Group
 from .models import Profile
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm, UserCreationForm, AuthenticationForm
 
 
-
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
-
-class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)
-
-    class Meta:
-        model = User
-        fields = ('username', 'first_name', 'email' )
-
-    def clean_password2(self):
-        cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
-            raise forms.ValidationError('Passwords don\'t match.')
-        return cd['password2']
-    
 class UserForm(forms.ModelForm):
-    group = forms.ModelChoiceField(queryset=Group.objects.all())
     class Meta:
         model = User
-        fields = ('username', 'first_name',  'email')
-
+        fields = ('first_name', 'last_name', 'email')
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('birth_date', 'phone', 'country', 'city', 'index', 'address1', 'address2', 'other')
+        fields = ('avatar', 'bio', 'birth_date')
+
+class UserUpdateForm(forms.ModelForm):
+    """
+    Форма обновления данных пользователя
+    """
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
+
+    def __init__(self, *args, **kwargs):
+        """
+        Обновление стилей формы под bootstrap
+        """
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'autocomplete': 'off'
+            })
+
+    def clean_email(self):
+        """
+        Проверка email на уникальность
+        """
+        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
+        if email and User.objects.filter(email=email).exclude(username=username).exists():
+            raise forms.ValidationError('Email адрес должен быть уникальным')
+        return email
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    """
+    Форма обновления данных профиля пользователя
+    """
+    class Meta:
+        model = Profile
+        fields = ('slug', 'birth_date', 'bio', 'avatar')
+
+    def __init__(self, *args, **kwargs):
+        """
+        Обновление стилей формы обновления
+        """
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'autocomplete': 'off'
+            })
+
+
+class UserRegisterForm(UserCreationForm):
+    """
+    Переопределенная форма регистрации пользователей
+    """
+
+    class Meta(UserCreationForm.Meta):
+        fields = UserCreationForm.Meta.fields + ('email', 'first_name', 'last_name')
+
+    def clean_email(self):
+        """
+        Проверка email на уникальность
+        """
+        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
+        if email and User.objects.filter(email=email).exclude(username=username).exists():
+            raise forms.ValidationError('Такой email уже используется в системе')
+        return email
+
+    def __init__(self, *args, **kwargs):
+        """
+        Обновление стилей формы регистрации
+        """
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields['username'].widget.attrs.update({"placeholder": 'Придумайте свой логин'})
+            self.fields['email'].widget.attrs.update({"placeholder": 'Введите свой email'})
+            self.fields['first_name'].widget.attrs.update({"placeholder": 'Ваше имя'})
+            self.fields["last_name"].widget.attrs.update({"placeholder": 'Ваша фамилия'})
+            self.fields['password1'].widget.attrs.update({"placeholder": 'Придумайте свой пароль'})
+            self.fields['password2'].widget.attrs.update({"placeholder": 'Повторите придуманный пароль'})
+            self.fields[field].widget.attrs.update({"class": "form-control", "autocomplete": "off"})
+
+
+class UserLoginForm(AuthenticationForm):
+    """
+    Форма авторизации на сайте
+    """
+
+    def __init__(self, *args, **kwargs):
+        """
+        Обновление стилей формы регистрации
+        """
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields['username'].widget.attrs['placeholder'] = 'Логин пользователя'
+            self.fields['password'].widget.attrs['placeholder'] = 'Пароль пользователя'
+            self.fields['username'].label = 'Логин'
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'autocomplete': 'off'
+            })

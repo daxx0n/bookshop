@@ -2,9 +2,186 @@
 
 {% block TITLE %} Book view {% endblock TITLE %}
 
+{% block HEAD %}
+<style>
+.card-prod {
+  margin: auto;
+  max-width: 1000px;
+  padding: 20px;
+  text-align: center;
+}
+
+.div-img {
+  text-align: center;
+  float: left;
+  margin: 0 20px 5px 90px;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: -15px 30px 12px rgba(0,0,0,0.2);
+}
+
+img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.div-text {
+  margin-left: 550px;
+  text-align: left;
+  word-break: break-all;
+}
+
+h5 {
+  font-size: 3em;
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+p {
+  font-size: 14px;
+  margin: 0;
+  padding: 2.5px 0;
+  color: grey;
+  word-break: normal;
+}
+.p_rating{
+  border-bottom: 1px solid #d9d9d9;
+  padding-bottom: 20px ;
+  color: rgb(47, 79, 60);
+}
+#btn-add-to-cart-active{
+  margin: 0.1rem 0.1rem; 
+  background-color: seagreen; 
+  border-color: seagreen;
+}
+#btn-add-to-cart-active:hover{
+  margin: 0.1rem 0.1rem; 
+  background-color: rgb(38, 175, 95); 
+  border-color: rgb(38, 175, 95);
+}
+
+
+</style>
+{% endblock HEAD %}
+
 {% block BODY %}
 
-<h1>Book # {{ object.pk }}</h1>
+<div class="card-prod">
+  <div class="div-img">
+    <img src="{{ object.books_picture.url }}" alt=" ">
+  </div>
+
+  <div class="div-text">
+      <h5 style="font-size: 2em; font-weight: 400; word-break: normal;">{{object.book_name}}
+        <p>
+        Автор: 
+          {{ object.book_author }}  
+        </a>
+        </p>
+        <p class="p_rating">
+          Рейтинг: {{object.book_rating}}<span style="color:gold;">★</span>
+        </p>
+      </h5>
+      
+      
+      {% if object.is_active == "Y" %}
+        <h5 style="color: darkgreen;">
+          {{object.book_price}} BYN
+        </h5>
+        {% if user.is_authenticated %}
+          {% comment %} если залогинен {% endcomment %}
+          {% if already_in_cart %}
+            {% comment %} если в корзине {% endcomment %}
+
+            <a href="#" class="btn btn-primary" id="btn-add-to-cart-active">Добавлено</a>
+            
+          {% else %}
+            {% comment %} если не в корзине {% endcomment %}
+
+            <a href="{% url 'cart:add_to_cart' pk=object.pk %}"
+              class="btn btn-primary" id="btn-add-to-cart-active">Добавить в корзину</a>
+
+          {% endif %}
+
+        {% else %}
+          {% comment %} если не залогинен {% endcomment %}
+
+          <a href="{% url 'staff:login' %}"
+            class="btn btn-primary" id="btn-add-to-cart-active">Добавить в корзину</a>
+
+        {% endif %}
+        
+      {% else %} 
+        <h5 style="color: darkgrey;">
+          {{object.book_price}} BYN
+        </h5>
+        <a href="#"
+          class="btn btn-danger" style ="margin: 0.1rem 0.1rem">Нет на складе</a>
+      {% endif %}
+      
+      <p style="padding-top: 20px;">
+      Серия: {{object.book_serie}}
+      </p>
+      <p>
+      Жанр: {{ object.book_genre }}  
+            </a>
+      </p>
+      <p>
+      Год издательства: {{object.book_year}}
+      </p>
+      <p>
+      Страницы: {{object.book_page}}
+      </p>
+      <p>
+      Переплёт: {{object.book_cover}}
+      </p>
+      <p>
+      Формат книги: {{object.format_book}}
+      </p>
+      <p>
+      ISBN: {{object.book_isbn}}
+      </p>
+      <p>
+      Вес: {{object.book_weight}}
+      </p>
+      <p>
+      Ограничения по возрасту: {{object.age_restrictions}}+
+      </p>
+      <p>
+      Издательство: {{object.book_publisher}}
+      </p>
+      <p>
+      В наличии книг: {{object.book_quantity}}
+      </p>
+
+
+
+      {% if user.is_superuser %}
+      <p style="color: #0d6efd; font-weight: 600;">
+        Доступна: {{object.book_isactive}}
+      </p>
+      {% endif %}
+      
+    {% if user.is_superuser %}
+      <a href="{% url 'Books:update-book' pk=object.pk %}" 
+        class="btn btn-primary" style ="margin: 0.1rem 0.1rem">Изменить</a>
+
+      {% if user.is_superuser %}
+        <a href="{% url 'Books:delete-book' pk=object.pk %}" 
+          class="btn btn-primary" style ="margin: 0.1rem 0.1rem">Удалить</a>
+      {% endif %}
+
+    {% endif %}
+  </div>
+  <div style="bottom: 0; text-align: left; margin-top: 80px;">
+    
+
+    
+  </div>
+</div>
+
+{% comment %} <h1>Book # {{ object.pk }}</h1>
 <b> Book name </b> {{ object.book_name }}
 <br>
 <b> Book price </b> {{ object.book_price }}
@@ -64,6 +241,6 @@
     window.location.href = "{% url "orders:view-cart" %}" + "?good_id={{object.pk}}&quantity=" + quantity.value;
     
   }
-</script>
+</script> {% endcomment %}
 
 {% endblock BODY %}
