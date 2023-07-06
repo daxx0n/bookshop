@@ -5,8 +5,10 @@ from pathlib import Path
 from django.utils import timezone
 from PIL import Image
 from django.urls import reverse_lazy
-from directories.models import Author, Serie, Genre, Publisher
+from django.contrib.auth import get_user_model
+from django.utils import timezone
 
+User = get_user_model()
 
 class Books(models.Model): 
     book_name = models.CharField(
@@ -147,3 +149,13 @@ class Books(models.Model):
                 hsize = int((float(im.size[1])*float(wpercent)))
                 im.thumbnail ((m_basewidth,hsize), Image.Resampling.LANCZOS)
                 im.save(str(BASE_DIR / '.'.join(file_name[:-1])) + f'_{m_basewidth}_.' + extention)
+    
+
+class Comments(models.Model):
+    book = models.ForeignKey(Books, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{} - {}'.format(self.book.book_name, self.user)

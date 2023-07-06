@@ -1,11 +1,12 @@
 from django.forms.models import BaseModelForm
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django import forms
 from . import models
 from . import forms
-
-
+from .forms import CommentForm
+from django.contrib.auth.decorators import login_required
+from .models import Books
 
 # Create your views here.
 
@@ -18,6 +19,7 @@ class BookView (generic.DetailView):
     template_name = "view_book.html"
     model = models.Books
 
+   
 class BookCreateView (generic.CreateView):
     model = models.Books
     form_class = forms.BookModelForm
@@ -40,3 +42,22 @@ class BookDeleteView (generic.DeleteView):
     model = models.Books
     template_name = "delete_book.html"
     success_url = "/directories/success/"
+
+@login_required(login_url='staff:login')
+def add_comment(request, comment_id):
+    form = CommentForm()
+    books = get_object_or_404(Books, pk=comment_id)
+    user = request.user
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = user
+            comment.book = books
+            comment.save()
+            return redirect('books:book_view', books.id)
+
+    context = {'form': form}
+
+    return render(request, 'comment_form.html', context)

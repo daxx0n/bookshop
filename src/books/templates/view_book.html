@@ -99,9 +99,11 @@ p {
           {% else %}
             {% comment %} если не в корзине {% endcomment %}
 
-            <a href="{% url 'cart:add_to_cart' pk=object.pk %}"
-              class="btn btn-primary" id="btn-add-to-cart-active">Добавить в корзину</a>
-
+        <div class="col-auto">
+          <button class="btn btn-danger" onclick="addToCart()">add to cart</button>
+          <input type="number" id="add-to-cart" class="form-control" min="1", max="100", value="1">
+        </div>
+              
           {% endif %}
 
         {% else %}
@@ -109,6 +111,7 @@ p {
 
           <a href="{% url 'staff:login' %}"
             class="btn btn-primary" id="btn-add-to-cart-active">Добавить в корзину</a>
+            
 
         {% endif %}
         
@@ -164,11 +167,11 @@ p {
       {% endif %}
       
     {% if user.is_superuser %}
-      <a href="{% url 'Books:update-book' pk=object.pk %}" 
+      <a href="{% url 'books:book_update' pk=object.pk %}" 
         class="btn btn-primary" style ="margin: 0.1rem 0.1rem">Изменить</a>
 
       {% if user.is_superuser %}
-        <a href="{% url 'Books:delete-book' pk=object.pk %}" 
+        <a href="{% url 'books:book_delete' pk=object.pk %}" 
           class="btn btn-primary" style ="margin: 0.1rem 0.1rem">Удалить</a>
       {% endif %}
 
@@ -176,9 +179,28 @@ p {
   </div>
   <div style="bottom: 0; text-align: left; margin-top: 80px;">
     
-
-    
   </div>
+  <div class="container-fluid">
+
+    <h2>Comments</h2>
+
+</div>
+
+<div class="container-fluid">
+
+    {% if not books.comments.all %}
+        <p>No comments yet ! <a class="text-primary" href="{% url 'books:add_comment' books.id %}">Add comment...</a></p>
+
+    {% else %}
+        <a class="text-primary" href="{% url 'books:add_comment' books.id %}">Add comment !</a><br/><br/>
+        {% for comment in books.comments.all%}
+            <b>{{ comment.user }}</b> - <span class="text-muted" style="font-size: 13px;">{{ comment.date }}</span>
+            <p>{{ comment.body }}</p>
+        {% endfor %}
+
+    {% endif %}
+
+</div>
 </div>
 
 {% comment %} <h1>Book # {{ object.pk }}</h1>
@@ -231,7 +253,7 @@ p {
         </div>
       </div>
     </div>
-</div>
+</div> {% endcomment %}
 
 <script>
   function addToCart() {
@@ -241,6 +263,6 @@ p {
     window.location.href = "{% url "orders:view-cart" %}" + "?good_id={{object.pk}}&quantity=" + quantity.value;
     
   }
-</script> {% endcomment %}
+</script> 
 
 {% endblock BODY %}
