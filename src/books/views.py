@@ -7,6 +7,7 @@ from . import forms
 from .forms import CommentForm
 from django.contrib.auth.decorators import login_required
 from .models import Books
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -56,7 +57,7 @@ def add_comment(request, comment_id):
             comment.user = user
             comment.book = books
             comment.save()
-            return redirect('books:book_view', books.id)
+            return redirect('books:book_view', books.pk)
 
     context = {'form': form}
 

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block TITLE %} Search {% endblock TITLE %}
+
+{% block BODY %}
+
+<h1> Search results</h1>
+<form action="" method="post">
+    <input type = "text" name = 'q' id="">
+    {% csrf_token $%}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Search</button>
+</form>
+
+{% endblock BODY %}

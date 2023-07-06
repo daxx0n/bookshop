@@ -27,8 +27,9 @@ urlpatterns = [
     path('staff/', include('staff.urls', namespace ='staff'), name = "staff"),
     path('orders/', include('orders.urls', namespace ='orders'), name = "orders"),
     path('books/', include('books.urls', namespace ='books'), name = "books"),
+    path('search/', include('search.urls', namespace ='search'), name = "search"),
     path('', home_views.HomePage.as_view(), name="Home Page"),
-
+  
 ] 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

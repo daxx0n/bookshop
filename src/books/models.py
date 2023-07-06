@@ -150,12 +150,11 @@ class Books(models.Model):
                 im.thumbnail ((m_basewidth,hsize), Image.Resampling.LANCZOS)
                 im.save(str(BASE_DIR / '.'.join(file_name[:-1])) + f'_{m_basewidth}_.' + extention)
     
-
 class Comments(models.Model):
-    book = models.ForeignKey(Books, on_delete=models.CASCADE)
+    book = models.ForeignKey(Books, on_delete=models.CASCADE, related_name = 'comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '{} - {}'.format(self.book.book_name, self.user)
+        return '{} - {}'.format(self.book, self.user)

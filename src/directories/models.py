@@ -39,6 +39,9 @@ class Author(models.Model):
     def get_absolute_url(self):
         return reverse_lazy ('directories:Success_Page')
 
+    def get_search_url(self):
+        return f"/author/{self.pk}"
+
     def author_picture_med (self):
         original_url = self.picture.url
         new_url = original_url.split('.')
