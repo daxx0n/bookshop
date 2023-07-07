@@ -32,20 +32,24 @@ class AuthorCreateView (LoginRequiredMixin, generic.CreateView):
         self.object.picture_resizer()
         return super().get_success_url()
     
-class AuthorUpdateView (LoginRequiredMixin, generic.UpdateView):
+class AuthorUpdateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, generic.UpdateView):
     model = models.Author
     form_class = forms.AuthorModelForm
     template_name = "update.html"
     login_url = reverse_lazy("staff:login")
-    context_object_name = 'article'
+    context_object_name = 'author_update'
     success_message = 'Автор был успешно обновлен'
+    permission_required = "polls.author_update"
 
-    
-    def form_valid(self, form):
-        if form.has_changed():
-            if 'picture' in form.changed_data:
-                print (form.changed_data)
-        return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Автор обновлен'
+        return context
+    # def form_valid(self, form):
+    #     if form.has_changed():
+    #         if 'picture' in form.changed_data:
+    #             print (form.changed_data)
+    #     return super().form_valid(form)
     
 class AuthorDeleteView (StaffRequiredMixin, generic.DeleteView):
     model = models.Author
@@ -154,10 +158,4 @@ class PublisherDeleteView (generic.DeleteView):
      
 # Success page
 
-def success_page(request):
-    return render (
-        request,
-        template_name = "success_page.html",
-        context = {"message": "The object was created/updated or deleted succefully!"}
-        )
 

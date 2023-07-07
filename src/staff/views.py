@@ -14,6 +14,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.sites.models import Site
 from django.core.mail import send_mail
+from django.contrib.auth.models import Group, User
 from proj.services.mixins import UserIsNotAuthenticated
 from proj.services.utils import unique_slugify
 from .models import Profile
@@ -100,7 +101,7 @@ class UserRegisterView(UserIsNotAuthenticated, CreateView):
     Представление регистрации на сайте с формой регистрации
     """
     form_class = UserRegisterForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('Home Page')
     template_name = 'staff/registration/user_register.html'
 
     def get_context_data(self, **kwargs):
@@ -112,6 +113,10 @@ class UserRegisterView(UserIsNotAuthenticated, CreateView):
         user = form.save(commit=False)
         user.is_active = False
         user.save()
+        g = Group.objects.get(name='Customers')
+        users = User.objects.all()
+        for u in users:
+            g.user_set.add(u)
         # Функционал для отправки письма и генерации токена
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))

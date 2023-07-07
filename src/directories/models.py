@@ -37,7 +37,7 @@ class Author(models.Model):
         return str(self.author_lastname)+ " " + str(self.author_firstname)
  
     def get_absolute_url(self):
-        return reverse_lazy ('directories:Success_Page')
+        return reverse_lazy ('Home Page')
 
     def get_search_url(self):
         return f"/author/{self.pk}"

@@ -11,6 +11,7 @@ from django.utils import timezone
 User = get_user_model()
 
 class Books(models.Model): 
+    
     book_name = models.CharField(
         verbose_name="Book's name",
         max_length = 15,
@@ -20,6 +21,7 @@ class Books(models.Model):
     picture = models.ImageField(
         verbose_name="Book picture",
         upload_to="uploads/%Y/%m/%d/",
+        default='images/default_book.png',
         blank=True
     )
     book_price = models.DecimalField(

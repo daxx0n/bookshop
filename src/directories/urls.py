@@ -3,7 +3,7 @@ from . import views
 app_name = 'directories'
 
 urlpatterns = [
-    path('success/', views.success_page, name="Success_Page"),
+    # path('success/', views.success_page, name="Success_Page"),
     path('authors_list_view/', views.AuthorListView.as_view(), name="Authors list"),
     path('genres_list_view/', views.GenreListView.as_view(), name="Genres list"),
     path('publishers_list_view/', views.PublisherListView.as_view(), name="Publishers List"),
