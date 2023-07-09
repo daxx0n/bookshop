@@ -23,9 +23,9 @@
         <td> {{ obj.author_firstname }} </td>
         <td> {{ obj.author_lastname }} </td>
         <td> 
-            <a href = "{% url "directories:Author Update" pk=obj.pk %}"><i class="bi bi-pencil-fill"></i></a>
-            <a href = "{% url "directories:Author View" pk=obj.pk %}"><i class="bi bi-eye"></i></a>
-            <a href = "{% url "directories:Author Delete" pk=obj.pk %}"><i class="bi bi-trash3"></i></a>
+            <a href = "{% url "directories:author_update" pk=obj.pk %}"><i class="bi bi-pencil-fill"></i></a>
+            <a href = "{% url "directories:author_view" pk=obj.pk %}"><i class="bi bi-eye"></i></a>
+            <a href = "{% url "directories:author_delete" pk=obj.pk %}"><i class="bi bi-trash3"></i></a>
         </td>
      </tr>
     {% endfor %}

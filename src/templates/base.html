@@ -177,10 +177,10 @@
             Справочники
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/directories/authors_list_view/">Авторы</a></li>
-            <li><a class="dropdown-item" href="/directories/genres_list_view/">Жанры</a></li>
-            <li><a class="dropdown-item" href="/directories/publishers_list_view/">Издатели</a></li>
-            <li><a class="dropdown-item" href="/directories/series_list_view/">Серии</a></li>
+            <li><a class="dropdown-item" href="{% url 'directories:authors_list' %}">Авторы</a></li>
+            <li><a class="dropdown-item" href="{% url 'directories:genres_list' %}">Жанры</a></li>
+            <li><a class="dropdown-item" href="{% url 'directories:publishers_list' %}">Издатели</a></li>
+            <li><a class="dropdown-item" href="{% url 'directories:series_list' %}">Серии</a></li>
           </ul>
         </li>
        

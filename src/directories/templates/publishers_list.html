@@ -23,9 +23,9 @@
         <td> {{ obj.publisher_name }} </td>
         <td> {{ obj.publisher_description }} </td>
         <td> 
-            <a href = "{% url "directories:Publisher Update" pk=obj.pk %}"><i class="bi bi-pencil-fill"></i></a>
-            <a href = "{% url "directories:Publisher View" pk=obj.pk %}"><i class="bi bi-eye"></i></a>
-            <a href = "{% url "directories:Publisher Delete" pk=obj.pk %}"><i class="bi bi-trash3"></i></a>
+            <a href = "{% url "directories:publisher_update" pk=obj.pk %}"><i class="bi bi-pencil-fill"></i></a>
+            <a href = "{% url "directories:publisher_view" pk=obj.pk %}"><i class="bi bi-eye"></i></a>
+            <a href = "{% url "directories:publisher_delete" pk=obj.pk %}"><i class="bi bi-trash3"></i></a>
         </td>
     </tr>
     {% endfor %}
