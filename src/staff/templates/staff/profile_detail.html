@@ -17,12 +17,29 @@
                         <ul>
                             <li>Никнейм: {{ profile.user.username }}</li>
                             {% if profile.user.get_full_name %} <li>Имя и фамилия: {{ profile.user.get_full_name }}</li> {% endif %}
-                            <li>Заходил: {{ profile.user.last_login }}</li>
                             <li>Дата рождения: {{ profile.birth_date }}</li>
-                            <li>О себе: {{ profile.bio }}</li>
+                            <li>e-mail: {{ profile.user.email }}</li>
+                            <li>Телефон: {{ profile.phone }}</li>
+                            <li>Группа: {% if  user.groups.all.0 %} Customers {% endif %}
+                                        {% if  user.groups.all.1 %} Admins {% endif %}
+                                        {% if  user.groups.all.2 %} Managers {% endif %}
+                            <li>Домашний адрес:           
+                            <li>Страна: {{ profile.country }}</li>
+                            <li>Город: {{ profile.city }}</li>
+                            <li>Индекс: {{ profile.index }}</li>
+                            <li>Адрес1: {{ profile.address_1 }}</li>
+                            <li>Адрес2: {{ profile.address_2 }}</li>
+                            <li>Дополнительная информация: {{ profile.other }}</li>
+                            <li>Заходил: {{ profile.user.last_login }}</li>
                         </ul>
                     <a href="{% url 'staff:profile_edit' %}" class="btn btn-sm btn-primary">Редактировать профиль</a>
                     </div>
+                    <div class="card-text">
+                        <h5 class="card-title">
+                            История заказов
+                        </h5>
+                        </div>
+                        <li>{% if user.groups.all.0 %}  {% endif %}</li>
                 </div>
             </div>
         </div>

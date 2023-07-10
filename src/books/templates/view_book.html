@@ -2,74 +2,11 @@
 
 {% block TITLE %} Book view {% endblock TITLE %}
 
-{% block HEAD %}
-<style>
-.card-prod {
-  margin: auto;
-  max-width: 1000px;
-  padding: 20px;
-  text-align: center;
-}
-
-.div-img {
-  text-align: center;
-  float: left;
-  margin: 0 20px 5px 90px;
-  width: 350px;
-  border-radius: 10px;
-  box-shadow: -15px 30px 12px rgba(0,0,0,0.2);
-}
-
-img {
-  display: block;
-  height: auto;
-  width: 100%;
-}
-
-.div-text {
-  margin-left: 550px;
-  text-align: left;
-  word-break: break-all;
-}
-
-h5 {
-  font-size: 3em;
-  margin-bottom: 10px;
-  margin-top: 0;
-}
-
-p {
-  font-size: 14px;
-  margin: 0;
-  padding: 2.5px 0;
-  color: grey;
-  word-break: normal;
-}
-.p_rating{
-  border-bottom: 1px solid #d9d9d9;
-  padding-bottom: 20px ;
-  color: rgb(47, 79, 60);
-}
-#btn-add-to-cart-active{
-  margin: 0.1rem 0.1rem; 
-  background-color: seagreen; 
-  border-color: seagreen;
-}
-#btn-add-to-cart-active:hover{
-  margin: 0.1rem 0.1rem; 
-  background-color: rgb(38, 175, 95); 
-  border-color: rgb(38, 175, 95);
-}
-
-
-</style>
-{% endblock HEAD %}
-
 {% block BODY %}
 
 <div class="card-prod">
   <div class="div-img">
-    <img src="{{ object.books_picture.url }}" alt=" ">
+    <img src="{{ object.picture }}" alt=" ">
   </div>
 
   <div class="div-text">
@@ -166,16 +103,7 @@ p {
       </p>
       {% endif %}
       
-    {% if user.is_superuser %}
-      <a href="{% url 'books:book_update' pk=object.pk %}" 
-        class="btn btn-primary" style ="margin: 0.1rem 0.1rem">Изменить</a>
-
-      {% if user.is_superuser %}
-        <a href="{% url 'books:book_delete' pk=object.pk %}" 
-          class="btn btn-primary" style ="margin: 0.1rem 0.1rem">Удалить</a>
-      {% endif %}
-
-    {% endif %}
+  
   </div>
   <div style="bottom: 0; text-align: left; margin-top: 80px;">
     
@@ -186,7 +114,7 @@ p {
 
 </div>
 
-<div class="container-fluid">
+<div class="card-text">
 
     {% if not books.comments.all %}
         <p>No comments yet ! <a class="text-primary" href="{% url 'books:add_comment' books.id %}">Add comment...</a></p>
@@ -239,7 +167,7 @@ p {
 <b> Updated at </b> {{ object.updated_at }}
 <br>
 <div class="card" style="width: 18rem;">
-    <img src="{{ object.picture.url }}" class="card-img-top" alt="...">
+    <img src="{{ {{ object.book_picture_med }} }}" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">{{object.book_name}}</h5>
       <p class="card-text">{{object.book_price}}</p>

@@ -7,6 +7,7 @@ from django.urls import reverse
 from proj.services.utils import unique_slugify
 
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     slug = models.SlugField(verbose_name='URL', max_length=255, blank=True, unique=True)
@@ -16,9 +17,16 @@ class Profile(models.Model):
         default='images/avatars/default.jpg',
         blank=True,  
         validators=[FileExtensionValidator(allowed_extensions=('png', 'jpg', 'jpeg'))])
-    bio = models.TextField(max_length=500, blank=True, verbose_name='Информация о себе')
     birth_date = models.DateField(null=True, blank=True, verbose_name='Дата рождения')
-    phone = models.CharField (null=False, blank=False, verbose_name='Телефон', max_length=12, default="+37500123456")
+    phone = models.CharField (null=False, blank=False, verbose_name='Телефон', max_length=12, default="")
+    country = models.CharField (null=True, blank=True, verbose_name='Страна', max_length=15)
+    city = models.CharField (null=True, blank=True, verbose_name='Город', max_length=15)
+    index = models.IntegerField (null=True, blank=True, verbose_name='Индекс')
+    address_1 = models.CharField (null=True, blank=True, verbose_name='Адрес1', max_length=30)
+    address_2 = models.CharField (null=True, blank=True, verbose_name='Адрес2', max_length=30)
+    other = models.TextField(max_length=500, blank=True, verbose_name='Дополнительная информация')
+    
+
     
 
     class Meta:

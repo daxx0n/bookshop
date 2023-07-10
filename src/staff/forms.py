@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('avatar', 'bio', 'birth_date')
+        fields = ('avatar', 'birth_date', 'phone', 'country', 'city', 'index', 'address_1', 'address_2', 'other',  'other')
 
 class UserUpdateForm(forms.ModelForm):
     """
@@ -52,7 +52,7 @@ class ProfileUpdateForm(forms.ModelForm):
     """
     class Meta:
         model = Profile
-        fields = ('slug', 'birth_date', 'phone', 'bio', 'avatar',)
+        fields = ('slug', 'birth_date', 'phone', 'country', 'city', 'index', 'address_1', 'address_2', 'other', 'avatar')
 
     def __init__(self, *args, **kwargs):
         """

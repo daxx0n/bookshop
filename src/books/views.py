@@ -32,7 +32,12 @@ class BookCreateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequire
     success_url = reverse_lazy('Home Page')
     success_message = 'Книга была успешно создана!'
     permission_required = "books.add_books"
-    
+     
+    def get_success_url(self) -> str:
+        self.object.picture_resizer()
+        return super().get_success_url()
+
+
 class BookUpdateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, generic.UpdateView):
     model = models.Books
     form_class = forms.BookModelForm
@@ -42,6 +47,10 @@ class BookUpdateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequire
     success_url = reverse_lazy('Home Page')
     success_message = 'Книга была успешно обновлена!'
     permission_required = "books.change_books"
+
+    def get_success_url(self) -> str:
+        self.object.picture_resizer()
+        return super().get_success_url()
    
 class BookDeleteView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, generic.DeleteView, ):
     model = models.Books

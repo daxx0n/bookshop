@@ -55,6 +55,7 @@ class ProfileDetailView(DetailView):
     template_name = 'staff/profile_detail.html'
     queryset = model.objects.all().select_related('user')
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = f'Страница пользователя: {self.object.user.username}'
