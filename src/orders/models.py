@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from books.models import Books
+from django.shortcuts import render
 
 # Create your models here.
 
@@ -108,3 +109,7 @@ class Order (models.Model):
         auto_now_add=False,
         auto_now=True        
     )
+
+
+
+

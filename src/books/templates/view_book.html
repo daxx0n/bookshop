@@ -3,13 +3,17 @@
 {% block TITLE %} Book view {% endblock TITLE %}
 
 {% block BODY %}
-
-<div class="card-prod">
-  <div class="div-img">
-    <img src="{{ object.picture }}" alt=" ">
-  </div>
-
-  <div class="div-text">
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <div class="card-prod">
+        <div class="div-img">
+          <img src="{{ object.picture.url }}" alt=" ">
+        </div>
+      </div>
+    </div>
+    <div class="col">
+       <div class="div-text">
       <h5 style="font-size: 2em; font-weight: 400; word-break: normal;">{{object.book_name}}
         <p>
         Автор: 
@@ -26,31 +30,13 @@
         <h5 style="color: darkgreen;">
           {{object.book_price}} BYN
         </h5>
-        {% if user.is_authenticated %}
-          {% comment %} если залогинен {% endcomment %}
-          {% if already_in_cart %}
-            {% comment %} если в корзине {% endcomment %}
 
-            <a href="#" class="btn btn-primary" id="btn-add-to-cart-active">Добавлено</a>
-            
-          {% else %}
-            {% comment %} если не в корзине {% endcomment %}
 
         <div class="col-auto">
           <button class="btn btn-danger" onclick="addToCart()">add to cart</button>
           <input type="number" id="add-to-cart" class="form-control" min="1", max="100", value="1">
         </div>
-              
-          {% endif %}
 
-        {% else %}
-          {% comment %} если не залогинен {% endcomment %}
-
-          <a href="{% url 'staff:login' %}"
-            class="btn btn-primary" id="btn-add-to-cart-active">Добавить в корзину</a>
-            
-
-        {% endif %}
         
       {% else %} 
         <h5 style="color: darkgrey;">
@@ -86,7 +72,7 @@
       Вес: {{object.book_weight}}
       </p>
       <p>
-      Ограничения по возрасту: {{object.age_restrictions}}+
+      Ограничения по возрасту: {{object.book_age}}
       </p>
       <p>
       Издательство: {{object.book_publisher}}
@@ -95,93 +81,49 @@
       В наличии книг: {{object.book_quantity}}
       </p>
 
-
-
-      {% if user.is_superuser %}
-      <p style="color: #0d6efd; font-weight: 600;">
-        Доступна: {{object.book_isactive}}
-      </p>
-      {% endif %}
       
   
   </div>
   <div style="bottom: 0; text-align: left; margin-top: 80px;">
-    
   </div>
-  <div class="container-fluid">
+  </div>
+  <div class="container text-center">
+    <div class="row">
+      <div class="col">
 
-    <h2>Comments</h2>
+      </div>
+      <div class="col-6">
+        <div class="container-fluid">
 
-</div>
+          <h2>Comments</h2>
+      
+      </div>
+      
+      <div class="card-text">
+      
+          {% if not books.comments.all %}
+              <p>No comments yet ! <a class="text-primary" href="{% url 'books:add_comment' books.id %}">Add comment...</a></p>
+      
+          {% else %}
+              <a class="text-primary" href="{% url 'books:add_comment' books.id %}">Add comment !</a><br/><br/>
+              {% for comment in books.comments.all%}
+                  <b>{{ comment.user }}</b> - <span class="text-muted" style="font-size: 13px;">{{ comment.date }}</span>
+                  <p>{{ comment.body }}</p>
+              {% endfor %}
+      
+          {% endif %}
+      
+      </div>
+      </div>
+      <div class="col">
 
-<div class="card-text">
-
-    {% if not books.comments.all %}
-        <p>No comments yet ! <a class="text-primary" href="{% url 'books:add_comment' books.id %}">Add comment...</a></p>
-
-    {% else %}
-        <a class="text-primary" href="{% url 'books:add_comment' books.id %}">Add comment !</a><br/><br/>
-        {% for comment in books.comments.all%}
-            <b>{{ comment.user }}</b> - <span class="text-muted" style="font-size: 13px;">{{ comment.date }}</span>
-            <p>{{ comment.body }}</p>
-        {% endfor %}
-
-    {% endif %}
-
-</div>
-</div>
-
-{% comment %} <h1>Book # {{ object.pk }}</h1>
-<b> Book name </b> {{ object.book_name }}
-<br>
-<b> Book price </b> {{ object.book_price }}
-<br>
-<b> Book author </b> {{ object.book_author }}
-<br>
-<b> Book serie </b> {{ object.book_serie }}
-<br>
-<b> Book serie </b> {{ object.book_genre }}
-<br>
-<b> Book year </b> {{ object.book_year }}
-<br>
-<b> Book pages </b> {{ object.book_page }}
-<br>
-<b> Book cover </b> {{ object.book_cover }}
-<br>
-<b> Book ISBN </b> {{ object.book_isbn }}
-<br>
-<b> Book weight </b> {{ object.book_weight }} грамм
-<br>
-<b> Age restriction </b> {{ object.book_age }}
-<br>
-<b> Book publisher </b> {{ object.book_publisher }}
-<br>
-<b> Book quantity </b> {{ object.book_quantity }}
-<br>
-<b> Active to order </b> {{ object.is_active }}
-<br>
-<b> Book rating </b> {{ object.book_rating }}
-<br>
-<b> Created at </b> {{ object.created_at }}
-<br>
-<b> Updated at </b> {{ object.updated_at }}
-<br>
-<div class="card" style="width: 18rem;">
-    <img src="{{ {{ object.book_picture_med }} }}" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">{{object.book_name}}</h5>
-      <p class="card-text">{{object.book_price}}</p>
-      <a href="{% url 'books:book_view' pk=object.pk %}" class="btn btn-primary">See book</a><br>
-      <div class="row">
-        <div class="col-auto">
-            <button class="btn btn-danger" onclick="addToCart()">add to cart</button>
-        </div>
-        <div class="col-auto">
-          <input type="number" id="add-to-cart" class="form-control" min="1", max="100", value="1">
-        </div>
       </div>
     </div>
-</div> {% endcomment %}
+
+
+
+  </div>
+
 
 <script>
   function addToCart() {

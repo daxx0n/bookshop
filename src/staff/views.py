@@ -19,32 +19,9 @@ from proj.services.mixins import UserIsNotAuthenticated
 from proj.services.utils import unique_slugify
 from .models import Profile
 from .forms import UserUpdateForm, ProfileUpdateForm, UserLoginForm, UserForgotPasswordForm, \
-    UserSetNewPasswordForm, UserForm, ProfileForm, UserPasswordChangeForm, UserRegisterForm
+    UserSetNewPasswordForm, UserPasswordChangeForm, UserRegisterForm
 
 
-
-User = get_user_model()
-
-@login_required
-@transaction.atomic
-def update_profile(request):
-    if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, _('Ваш профиль был успешно обновлен!'))
-            return redirect('staff:profile')
-        else:
-            messages.error(request, _('Пожалуйста, исправьте ошибки.'))
-    else:
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'staff/profile.html', {
-        'user_form': user_form,
-        'profile_form': profile_form
-    })
 
 class ProfileDetailView(DetailView):
     """

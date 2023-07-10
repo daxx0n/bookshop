@@ -6,6 +6,7 @@ from django.views.generic import DetailView, FormView, TemplateView
 from books.models import Books
 from django.urls import reverse_lazy
 from . import models, forms
+from .models import Cart, Order, GoodInCart
 
 # Create your views here.
 
@@ -118,6 +119,25 @@ class CreateOrder (FormView):
             pk=int(cart_id)
         )
         return context
-    
+ 
 class OrderSuccess(TemplateView):
     template_name = "orders/order-complete.html"
+    
+def history_order(request):
+    context={}
+    user_id = None
+    if request.user.is_authenticated:
+        user_id = request.user
+    carts = Cart.objects.filter(customer=user_id)
+    print("carts : ", carts)
+    orders = Order.objects.filter(cart_id__in=carts)
+    print("orders : ", orders)
+    goods = GoodInCart.objects.get_queryset()
+    print("goods : ", goods)
+    context = {
+        'user_carts': carts,
+        'user_orders': orders,
+        'user_goods': goods,
+    }
+    print("context : ", context)
+    return render(request, template_name="orders/history_order.html",context=context)
