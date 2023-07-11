@@ -2,7 +2,7 @@ from typing import Any, Dict, Optional
 from django.db import models
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView, FormView, TemplateView
+from django.views.generic import DetailView, FormView, TemplateView, UpdateView
 from books.models import Books
 from django.urls import reverse_lazy
 from . import models, forms
@@ -119,20 +119,28 @@ class CreateOrder (FormView):
             pk=int(cart_id)
         )
         return context
- 
+
+class OrderUpdateView(UpdateView):
+    model= Order
+    form_class= forms.CreateOrderForm
+    template_name = "orders/order_update.html"
+    success_url= 'complete-order'
+
+
 class OrderSuccess(TemplateView):
     template_name = "orders/order-complete.html"
     
 def history_order(request):
     context={}
     user_id = None
+    good = None
     if request.user.is_authenticated:
         user_id = request.user
     carts = Cart.objects.filter(customer=user_id)
-    print("carts : ", carts)
+
     orders = Order.objects.filter(cart_id__in=carts)
-    print("orders : ", orders)
-    goods = GoodInCart.objects.get_queryset()
+
+    goods = GoodinCart.objects.get_queryset().filter(goods=orders)
     print("goods : ", goods)
     context = {
         'user_carts': carts,
@@ -140,4 +148,4 @@ def history_order(request):
         'user_goods': goods,
     }
     print("context : ", context)
-    return render(request, template_name="orders/history_order.html",context=context)
+    return render(request, template_name="orders/history_order.html", context=context)
