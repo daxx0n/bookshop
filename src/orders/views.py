@@ -140,7 +140,7 @@ def history_order(request):
 
     orders = Order.objects.filter(cart_id__in=carts)
 
-    goods = GoodinCart.objects.get_queryset().filter(goods=orders)
+    goods = GoodInCart.objects.get_queryset().filter(cart_id__in=carts)
     print("goods : ", goods)
     context = {
         'user_carts': carts,
