@@ -53,7 +53,7 @@ class GoodInCart(models.Model):
     price = models.DecimalField(
         verbose_name= 'Price',
         max_digits=6,
-        decimal_places=0
+        decimal_places=2
     )
     created = models.DateTimeField(
         verbose_name='created',

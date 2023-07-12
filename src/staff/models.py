@@ -18,7 +18,7 @@ class Profile(models.Model):
         blank=True,  
         validators=[FileExtensionValidator(allowed_extensions=('png', 'jpg', 'jpeg'))])
     birth_date = models.DateField(null=True, blank=True, verbose_name='Дата рождения')
-    phone = models.CharField (null=False, blank=False, verbose_name='Телефон', max_length=12, default="")
+    phone = models.CharField (null=False, blank=False, verbose_name='Телефон', max_length=14, default="")
     country = models.CharField (null=True, blank=True, verbose_name='Страна', max_length=15)
     city = models.CharField (null=True, blank=True, verbose_name='Город', max_length=15)
     index = models.IntegerField (null=True, blank=True, verbose_name='Индекс')
