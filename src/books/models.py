@@ -162,7 +162,7 @@ class Books(models.Model):
 class Comments(models.Model):
     book = models.ForeignKey(Books, on_delete=models.CASCADE, related_name = 'comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    body = models.TextField()
+    body = models.TextField(max_length=150)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

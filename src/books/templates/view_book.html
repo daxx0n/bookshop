@@ -3,146 +3,106 @@
 {% block TITLE %} Book view {% endblock TITLE %}
 
 {% block BODY %}
-<div class="container text-center">
-  <div class="row">
-    <div class="col">
-      <div class="div-text">
-        <h5 style="font-size: 2em; font-weight: 400; word-break: normal;">{{object.book_name}}
+
+        <!-- Product section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src= {{ object.picture.url }} alt="..." /></div>
+                    <div class="col-md-6">
+                        <div class="small mb-1">ISBN {{object.book_isbn}}</div>
+                        <h1 class="display-5 fw-bolder">{{object.book_name}}</h1>
+                        <div class="fs-5 mb-5">
+                          {% if object.is_active == "Y" %}
+                            <span>{{object.book_price}} BYN</span>
+                          {% else %} 
+                            <span class="text-decoration-line-through">{{object.book_price}} BYN</span><br>
+                            <button class="btn btn-danger" type="button" >
+                              <i class="bi-cart-fill me-1"></i>
+                              Нет в наличии
+                          </button>
+                          {% endif %}
+                        </div>
+                        <p class="lead">
+                             <p>
+                            Автор: {{ object.book_author }}
+                            </p>  
+                             <p>
+                            Серия: {{object.book_serie}}
+                            </p>
+                            <p>      
+                            Жанр: {{ object.book_genre }}  
+                            </p>
+                            <p>
+                            <p class="p_rating">
+                            Рейтинг: {{object.book_rating}} <span style="color:gold;">★</span>
+                            </p>
+                            Год издательства: {{object.book_year}}
+                            </p>
+                            <p>
+                            Страницы: {{object.book_page}}
+                            </p>
+                            <p>
+                            Переплёт: {{object.book_cover}}
+                            </p>
+                            <p>
+                            Формат книги: {{object.format_book}}
+                            </p>
+
+                            <p>
+                            Вес: {{object.book_weight}} г.
+                            </p>
+                            <p>
+                            Ограничения по возрасту: {{object.book_age}}
+                            </p>
+                            <p>
+                            Издательство: {{object.book_publisher}}
+                            </p>
+                            <p>
+                            В наличии книг: {{object.book_quantity}}
+                            </p>
+                        </p>
+                        {% if object.is_active == "Y" %}
+                        <div class="d-flex">
+                            <input class="form-control text-center me-3" id="add-to-cart" type="number" value="1" style="max-width: 3rem" />
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="addToCart()">
+                                <i class="bi-cart-fill me-1"></i>
+                                Add to cart
+                            </button>
+                        {% else %} 
   
-        </h5>
-      
+                        {% endif %}
+                            
+                    
 
-          <div class="container text-center">
-            <div class="row">
-              <div class="col">
-              </div>
-              <div class="col">
-               
 
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="col">
-              </div>
             </div>
-          </div>
-     
-  
-            
-          
-        
-        
-        <p style="padding-top: 20px;">
-        Серия: {{object.book_serie}}
-        </p>
-        <p>
-        Автор: {{ object.book_author }}
-        </p>  
-        <p>      
-        Жанр: {{ object.book_genre }}  
-        </p>
-        <p>
-        <p class="p_rating">
-        Рейтинг: {{object.book_rating}} <span style="color:gold;">★</span>
-        </p>
-        Год издательства: {{object.book_year}}
-        </p>
-        <p>
-        Страницы: {{object.book_page}}
-        </p>
-        <p>
-        Переплёт: {{object.book_cover}}
-        </p>
-        <p>
-        Формат книги: {{object.format_book}}
-        </p>
-        <p>
-        ISBN: {{object.book_isbn}}
-        </p>
-        <p>
-        Вес: {{object.book_weight}} г.
-        </p>
-        <p>
-        Ограничения по возрасту: {{object.book_age}}
-        </p>
-        <p>
-        Издательство: {{object.book_publisher}}
-        </p>
-        <p>
-        В наличии книг: {{object.book_quantity}}
-        </p>
-        {% if object.is_active == "Y" %}
-          <h5 style="color: darkgreen;">
-            {{object.book_price}} BYN
-          </h5>
-          <div class="grid text-center" style="--bs-columns: 4; --bs-gap: 5rem;">
-            <div class="g-col-2"> <div class="container text-center" style="width: 5rem;">
-              <input value="1" type="number" id="add-to-cart" class="form-control" />
-              <label class="form-label" for="add-to-cart"></label>
-            </div>
-            <div class="g-col-2"> <button class="btn btn-success" onclick="addToCart()">add to cart</button></div>
-          </div>
-          
-        {% else %} 
-        <div class="grid text-center" style="--bs-columns: 4; --bs-gap: 5rem;">
-          <div class="g-col-2"> 
-          <h5 style="color: darkgrey;">
-            {{object.book_price}} BYN
-          </h5>
-          </div>
-          <div class="g-col-2">
-          <a href="#"
-            class="btn btn-danger" style ="margin: 0.1rem 0.1rem">Нет в наличии </a>
-          </div>
-        </div>
-        {% endif %}
+        </section>
+        <div class="container text-center">
 
-        
-        
-    
-    </div>
-    <div class="container text-center">
-
-      <h2>Comments</h2>
-  
-    </div>
-    <div class="card-text">
+          <h2>Comments</h2>
       
-      {% if not books.comments.all %}
-          <p>No comments yet ! <a class="text-primary" href="{% url 'books:add_comment' books.id %}">Add comment...</a></p>
-  
-      {% else %}
-          <a class="text-primary" href="{% url 'books:add_comment' books.id %}">Add comment !</a><br/><br/>
-          {% for comment in books.comments.all%}
-              <b>{{ comment.user }}</b> - <span class="text-muted" style="font-size: 13px;">{{ comment.date }}</span>
-              <p>{{ comment.body }}</p>
-          {% endfor %}
-  
-      {% endif %}
-      <div class="grid text-center" style="--bs-columns: 4; --bs-gap: 5rem;">
-  </div>
-    </div>
-    <div class="col">
-      <div class="container text-center">
-        <div class="row">
-          <div class="col">
-            <div class="card-prod">
-              <div class="div-img">
-                <img src="{{ object.picture.url }}" class="img-thumbnail"  max-width: 80% alt="...">
-              </div>
-            </div>
-          </div>
-  </div>
-</div>
-  
-  <div class="col">
-      </div>
-      <div class="col">
-      </div>
-  </div>
-
-
-
-  </div>
+        </div>
+        <div class="card-text">
+          
+          {% if not books.comments.all %}
+              <p>No comments yet ! <a class="text-primary" href="{% url 'books:add_comment' books.id %}">Add comment...</a></p>
+      
+          {% else %}
+              <a class="text-primary" href="{% url 'books:add_comment' books.id %}">Add comment !</a><br/><br/>
+              {% for comment in books.comments.all%}
+                  <b>{{ comment.user }}</b> - <span class="text-muted" style="font-size: 13px;">{{ comment.date }}</span>
+                  <p>{{ comment.body }}</p>
+              {% endfor %}
+      
+          {% endif %}
+        <!-- Footer-->
+        <footer class="py-2 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Bookshop 2023 </p></div>
+        </footer>
 
 
 <script>
@@ -154,6 +114,6 @@
     window.location.href = "{% url "orders:view-cart" %}" + "?good_id={{object.pk}}&quantity=" + quantity.value;
     
   }
-</script> 
+</script>  
 
 {% endblock BODY %}
