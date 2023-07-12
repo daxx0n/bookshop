@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block TITLE %} Cart {% endblock TITLE %}
+
+{% block BODY %}
+
+<h1>История заказов</h1>
+
+
+<table class="table table-bordered">
+        <tr>
+           <th>Номер заказа</th>
+           <th>Статус</th>
+           <th>Дата создания</th>
+
+        </tr>
+       {% for order in user_orders %}
+       <tr>
+           <td> {{ order.pk }} </td>
+           <td> {{ order.status }} </td>
+           <td> {{ order.created }} </td>
+        </tr>
+       {% endfor %}
+   </table>
+
+
+{% endblock BODY %}

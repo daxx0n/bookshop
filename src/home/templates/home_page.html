@@ -3,9 +3,52 @@
 
 {% block TITLE %} Home page {% endblock TITLE %}
 
-{% block BODY %}
 
-    <h1>This is home page!</h1>
-    <img src="{% static 'directories/david_about_python.jpeg' %}" alt="My image">
-    
+{% block BODY %} 
+
+
+  
+        <div class="album py-5 bg-body-tertiary">
+          <div class="container">
+        
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+              {% for object in object_list %}
+        
+                <div class="col" style="width: 25%; height: 600px;">
+                  <div class="card-sl">
+                  <div class="card-image">
+                     <img src="{{ object.book_picture_med }}" width="300" height ="300" style="max-width: 300px; object-fit: fill" class="card-img-top" alt="No image"> 
+                  </div>
+
+                  
+                  <div class="card-heading">
+                    {{object.book_name}}
+                  </div>
+                  <div class="card-text">
+                      Автор: {{object.book_author}} <br>
+                      Жанр: {{object.book_genre}} <br>
+                      Серия: {{object.book_serie}} <br>
+                      Рейтинг:{{object.book_rating}} <br>
+                  </div>
+                  <div class="card-text">
+                    {{object.book_price}} BYN
+                  </div>
+                  <a href="{% url 'books:book_view' pk=object.pk %}" class="card-button">Подробнее</a>
+                  <div class="d-flex justify-content-between align-items-center">
+                  
+              </div>
+                      
+                        
+                  </div>
+                </div>
+              {% endfor %}
+              
+             
+              
+            </div>
+          </div>
+        </div> 
+
+
+
 {% endblock BODY %}

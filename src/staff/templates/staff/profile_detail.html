@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block BODY %}
+<div class="card border-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <figure>
+                        <img src="{{ profile.avatar.url }}" class="img-fluid rounded-0" alt="{{ profile }}">
+                    </figure>
+                </div>
+                <div class="col-md-9">
+                     <h5 class="card-title">
+                        {{ profile }}
+                    </h5>
+                    <div class="card-text">
+                        <ul>
+                            <li>Никнейм: {{ profile.user.username }}</li>
+                            {% if profile.user.get_full_name %} <li>Имя и фамилия: {{ profile.user.get_full_name }}</li> {% endif %}
+                            <li>Дата рождения: {{ profile.birth_date }}</li>
+                            <li>e-mail: {{ profile.user.email }}</li>
+                            <li>Телефон: {{ profile.phone }}</li>
+                            <li>Группа: {{ user.groups.all.0 }} 
+                                       
+                            <li>Домашний адрес:           
+                            <li>Страна: {{ profile.country }}</li>
+                            <li>Город: {{ profile.city }}</li>
+                            <li>Индекс: {{ profile.index }}</li>
+                            <li>Адрес1: {{ profile.address_1 }}</li>
+                            <li>Адрес2: {{ profile.address_2 }}</li>
+                            <li>Дополнительная информация: {{ profile.other }}</li>
+                            <li>Заходил: {{ profile.user.last_login }}</li>
+                        </ul>
+                    
+                    </div>
+                    <div class="card-text">
+                        <h5 class="card-title">
+                            <a href = " {% url 'orders:history-order' %} ">История заказов</a>
+                        </h5>
+                        </div>
+                        <li>{% if user.groups.all.0 %}  {% endif %}</li>
+                        
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock BODY %}
