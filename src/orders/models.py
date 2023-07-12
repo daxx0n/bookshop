@@ -82,16 +82,16 @@ class Order (models.Model):
     ) 
 
     STATUSES = (
-        ('NEW', "Новый"),
-        ('OFORMLEN', "Оформлен"),
-        ('ATWORK', "В работе"),
-        ('VYDAN', "Выдан"),
-        ('CLOSED', "Закрыт")
+        ('Новый', "NEW"),
+        ('Оформлен', "OFORMLEN"),
+        ('В работе', "ATWORK"),
+        ('Выдан', "VYDAN"),
+        ('Отеменен', "CLOSED")
     )
     status = models.CharField(
         max_length=8,
         choices= STATUSES,
-        default=STATUSES[0],
+        default='NEW'
     )
     cart = models.OneToOneField(
         Cart,

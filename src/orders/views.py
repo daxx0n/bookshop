@@ -99,7 +99,7 @@ class CreateOrder (SuccessMessageMixin, FormView):
     def form_valid(self, form):
         delivery_address = form.cleaned_data.get("delivery_address")
         phone = form.cleaned_data.get("phone")
-        status = models.Order (pk=1)
+        status = "Новый"
         cart_pk = int(self.request.session.get("cart_id"))
         cart = get_object_or_404(
             models.Cart,
@@ -131,8 +131,6 @@ class OrderUpdateView(UpdateView):
     success_url= 'order-complete'
 
 
-
-
 class OrderSuccess(TemplateView):
     template_name = "orders/order-complete.html"
     
@@ -143,15 +141,10 @@ def history_order(request):
     if request.user.is_authenticated:
         user_id = request.user
     carts = Cart.objects.filter(customer=user_id)
-
     orders = Order.objects.filter(cart_id__in=carts)
-
-    goods = GoodInCart.objects.get_queryset().filter(cart_id__in=carts)
-    print("goods : ", goods)
     context = {
         'user_carts': carts,
         'user_orders': orders,
-        'user_goods': goods,
     }
     print("context : ", context)
     return render(request, template_name="orders/history_order.html", context=context)

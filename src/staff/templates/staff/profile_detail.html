@@ -20,9 +20,8 @@
                             <li>Дата рождения: {{ profile.birth_date }}</li>
                             <li>e-mail: {{ profile.user.email }}</li>
                             <li>Телефон: {{ profile.phone }}</li>
-                            <li>Группа: {% if  user.groups.all.0 %} Customers {% endif %}
-                                        {% if  user.groups.all.1 %} Admins {% endif %}
-                                        {% if  user.groups.all.2 %} Managers {% endif %}
+                            <li>Группа: {{ user.groups.all.0 }} 
+                                       
                             <li>Домашний адрес:           
                             <li>Страна: {{ profile.country }}</li>
                             <li>Город: {{ profile.city }}</li>

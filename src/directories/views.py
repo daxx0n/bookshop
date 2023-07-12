@@ -3,8 +3,6 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
-
-
 from . import models
 from . import forms
 
@@ -192,4 +190,5 @@ class PublisherDeleteView (LoginRequiredMixin, SuccessMessageMixin, PermissionRe
     permission_required = ('directories.delete_publisher')
   
      
+
 

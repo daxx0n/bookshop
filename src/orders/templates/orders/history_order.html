@@ -7,11 +7,22 @@
 
 <h1>История заказов</h1>
 
-{% for order in user_orders %}
-        <p> {{ order.pk }}   {{ order.status }} {{ order.created }} </p>
-{% endfor %}
-{% for goods in order_goods %}
-        <p> {{ good.pk }}  {{ order.good}}  </p>
-{% endfor %}
+
+<table class="table table-bordered">
+        <tr>
+           <th>Номер заказа</th>
+           <th>Статус</th>
+           <th>Дата создания</th>
+
+        </tr>
+       {% for order in user_orders %}
+       <tr>
+           <td> {{ order.pk }} </td>
+           <td> {{ order.status }} </td>
+           <td> {{ order.created }} </td>
+        </tr>
+       {% endfor %}
+   </table>
+
 
 {% endblock BODY %}
