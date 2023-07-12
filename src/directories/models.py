@@ -28,7 +28,6 @@ class Author(models.Model):
     )
     author_bio = models.TextField(
             verbose_name = 'Author Bio',
-            max_length=1000,
             null = True,
             blank = True,
             help_text= "Author's biography, max len = 1000"
@@ -66,6 +65,10 @@ class Author(models.Model):
                 im.save(str(BASE_DIR / '.'.join(file_name[:-1])) + f'_{m_basewidth}_.' + extention)
     
 class Serie(models.Model):
+    picture = models.ImageField(
+            verbose_name="Serie picture",
+            upload_to="uploads/%Y/%m/%d/"
+    )
     serie_name = models.CharField(
             verbose_name = 'Serie',
             max_length = 40,
@@ -75,7 +78,6 @@ class Serie(models.Model):
     )
     serie_description = models.TextField(
             verbose_name ='Serie description',
-            max_length = 255,
             null = True,
             blank = True  
     )  
@@ -98,9 +100,12 @@ class Genre(models.Model):
     )
     genre_description = models.TextField(
             verbose_name = 'Genre description',
-            max_length = 255,
             null = True,
             blank = True
+    )
+    picture = models.ImageField(
+        verbose_name="Genre picture",
+        upload_to="uploads/%Y/%m/%d/"
     )
     def __str__(self):
         return (self.genre_name)
@@ -112,6 +117,11 @@ class Genre(models.Model):
         return f"/directories/genre_view/{self.pk}"
     
 class Publisher(models.Model):
+    picture = models.ImageField(
+        verbose_name="Publisher picture",
+        upload_to="uploads/%Y/%m/%d/"
+    )
+    
     publisher_name = models.CharField(
             verbose_name = 'Publisher',
             max_length = 30,
@@ -121,7 +131,6 @@ class Publisher(models.Model):
     )
     publisher_description = models.TextField(
             verbose_name = 'Publisher description',
-            max_length = 255,
             null=True,
             blank=True
     )

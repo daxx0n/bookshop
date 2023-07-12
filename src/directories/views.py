@@ -70,7 +70,7 @@ class SerieView (generic.DetailView):
 class SerieCreateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, generic.CreateView):
     model = models.Serie
     fields = [
-        'serie_name', 'serie_description'
+        'serie_name', 'serie_description', 'picture'
     ]
     template_name = "add.html"
     success_url = reverse_lazy('directories:series_list')
@@ -82,7 +82,7 @@ class SerieCreateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequir
 class SerieUpdateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, generic.UpdateView):
     model = models.Serie
     fields = [
-        'serie_name', 'serie_description'
+        'serie_name', 'serie_description', 'picture'
     ]
     template_name = "update.html"
     success_url = reverse_lazy('Home Page')
@@ -115,7 +115,7 @@ class GenreView (generic.DetailView):
 class GenreCreateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, generic.CreateView):
     model = models.Genre
     fields = [
-        'genre_name', 'genre_description'
+        'genre_name', 'genre_description', 'picture'
     ]
     template_name = "add.html"
     success_url = reverse_lazy('Home Page')
@@ -127,7 +127,7 @@ class GenreCreateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequir
 class GenreUpdateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, generic.UpdateView):
     model = models.Genre
     fields = [
-        'genre_name', 'genre_description'
+        'genre_name', 'genre_description', 'picture'
     ]
     template_name = "update.html"
     success_url = reverse_lazy('Home Page')
@@ -158,7 +158,7 @@ class PublisherView (generic.DetailView):
 class PublisherCreateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, generic.CreateView):
     model = models.Publisher
     fields = [
-        'publisher_name', 'publisher_description'
+        'publisher_name', 'publisher_description', 'picture'
     ]
     template_name = "add.html"
     success_url = reverse_lazy('Home Page')
@@ -170,7 +170,7 @@ class PublisherCreateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRe
 class PublisherUpdateView (LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, generic.UpdateView):
     model = models.Publisher
     fields = [
-        'publisher_name', 'publisher_description'
+        'publisher_name', 'publisher_description', 'picture'
     ]
     template_name = "update.html"
     success_url = reverse_lazy('Home Page')
