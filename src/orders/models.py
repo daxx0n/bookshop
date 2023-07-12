@@ -92,7 +92,7 @@ class Order (models.Model):
         max_length=8,
         choices= STATUSES,
         default=STATUSES[0],
-
+    )
     cart = models.OneToOneField(
         Cart,
         verbose_name="Cart",
