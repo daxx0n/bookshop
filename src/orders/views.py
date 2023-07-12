@@ -2,9 +2,10 @@ from typing import Any, Dict, Optional
 from django.db import models
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView, FormView, TemplateView
+from django.views.generic import DetailView, FormView, TemplateView, UpdateView
 from books.models import Books
 from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 from . import models, forms
 from .models import Cart, Order, GoodInCart
 
@@ -89,14 +90,16 @@ class CartAddDeleteItemView(DetailView):
             
         return cart 
     
-class CreateOrder (FormView):    
+class CreateOrder (SuccessMessageMixin, FormView):    
     form_class = forms.CreateOrderForm
     template_name = "orders/create_order.html"
-    success_url = reverse_lazy("orders:complete-order")
+    success_url = reverse_lazy("Home Page")
+    success_message = "Заказ был успешно оформлен!"
     
     def form_valid(self, form):
         delivery_address = form.cleaned_data.get("delivery_address")
-        status = models.Order(pk=1)
+        phone = form.cleaned_data.get("phone")
+        status = models.Order (pk=1)
         cart_pk = int(self.request.session.get("cart_id"))
         cart = get_object_or_404(
             models.Cart,
@@ -104,6 +107,7 @@ class CreateOrder (FormView):
         )
         obj = models.Order.objects.create(
             delivery_address = delivery_address,
+            phone = phone,
             status = status,
             cart = cart
         )
@@ -119,20 +123,28 @@ class CreateOrder (FormView):
             pk=int(cart_id)
         )
         return context
- 
+
+class OrderUpdateView(UpdateView):
+    model= Order
+    form_class= forms.CreateOrderForm
+    template_name = "orders/order_update.html"
+    success_url= 'order-complete'
+
+
 class OrderSuccess(TemplateView):
     template_name = "orders/order-complete.html"
     
 def history_order(request):
     context={}
     user_id = None
+    good = None
     if request.user.is_authenticated:
         user_id = request.user
     carts = Cart.objects.filter(customer=user_id)
-    print("carts : ", carts)
+
     orders = Order.objects.filter(cart_id__in=carts)
-    print("orders : ", orders)
-    goods = GoodInCart.objects.get_queryset()
+
+    goods = GoodInCart.objects.get_queryset().filter(cart_id__in=carts)
     print("goods : ", goods)
     context = {
         'user_carts': carts,
@@ -140,4 +152,4 @@ def history_order(request):
         'user_goods': goods,
     }
     print("context : ", context)
-    return render(request, template_name="orders/history_order.html",context=context)
+    return render(request, template_name="orders/history_order.html", context=context)

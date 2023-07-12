@@ -10,11 +10,7 @@
         <h5 style="font-size: 2em; font-weight: 400; word-break: normal;">{{object.book_name}}
   
         </h5>
-        
-        
-       
-  
-
+      
 
           <div class="container text-center">
             <div class="row">
@@ -78,22 +74,28 @@
           <h5 style="color: darkgreen;">
             {{object.book_price}} BYN
           </h5>
-  
+          <div class="grid text-center" style="--bs-columns: 4; --bs-gap: 5rem;">
+            <div class="g-col-2"> <div class="container text-center" style="width: 5rem;">
+              <input value="1" type="number" id="add-to-cart" class="form-control" />
+              <label class="form-label" for="add-to-cart"></label>
+            </div>
+            <div class="g-col-2"> <button class="btn btn-success" onclick="addToCart()">add to cart</button></div>
+          </div>
           
         {% else %} 
+        <div class="grid text-center" style="--bs-columns: 4; --bs-gap: 5rem;">
+          <div class="g-col-2"> 
           <h5 style="color: darkgrey;">
             {{object.book_price}} BYN
           </h5>
+          </div>
+          <div class="g-col-2">
           <a href="#"
             class="btn btn-danger" style ="margin: 0.1rem 0.1rem">Нет в наличии </a>
-        {% endif %}
-        <div class="grid text-center" style="--bs-columns: 4; --bs-gap: 5rem;">
-          <div class="g-col-2"> <div class="container text-center" style="width: 5rem;">
-            <input value="1" type="number" id="add-to-cart" class="form-control" />
-            <label class="form-label" for="add-to-cart"></label>
           </div>
-          <div class="g-col-2"> <button class="btn btn-success" onclick="addToCart()">add to cart</button></div>
         </div>
+        {% endif %}
+
         
         
     
@@ -116,7 +118,7 @@
           {% endfor %}
   
       {% endif %}
-  
+      <div class="grid text-center" style="--bs-columns: 4; --bs-gap: 5rem;">
   </div>
     </div>
     <div class="col">
@@ -130,6 +132,7 @@
             </div>
           </div>
   </div>
+</div>
   
   <div class="col">
       </div>

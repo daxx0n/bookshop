@@ -68,18 +68,7 @@ class GoodInCart(models.Model):
     def __str__(self) -> str:
         return f"{self.good.book_name} x {self.quantity}"
         
-NEW = "NEW"
-OFORMLEN = "Oformlen"
-ATWORK = "At_work"
-VYDAN = "Vydan"
-CLOSED = "Closed"
-STATUSES = [
-    (NEW, "Новый"),
-    (OFORMLEN, "Оформлен"),
-    (ATWORK, "В работе"),
-    (VYDAN, "Выдан"),
-    (CLOSED, "Закрыт")
-]
+
 
 class Order (models.Model):
     delivery_address = models.TextField(
@@ -87,10 +76,23 @@ class Order (models.Model):
         default = "Enter your adress"
     )
 
+    phone = models.CharField(
+        verbose_name = "Phone",
+        default = "Enter your Phone",
+        max_length=10
+    ) 
+
+    STATUSES = [
+        ('NEW', "Новый"),
+        ('OFORMLEN', "Оформлен"),
+        ('ATWORK', "В работе"),
+        ('VYDAN', "Выдан"),
+        ('CLOSED', "Закрыт")
+    ]
     status = models.CharField(
         max_length=8,
         choices= STATUSES,
-        default=NEW,
+        default=STATUSES[0],
         verbose_name='Order status',
          
     )

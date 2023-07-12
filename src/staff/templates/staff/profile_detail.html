@@ -36,10 +36,12 @@
                     </div>
                     <div class="card-text">
                         <h5 class="card-title">
-                            История заказов
+                            <a href = " {% url 'orders:history-order' %} ">История заказов</a>
                         </h5>
                         </div>
                         <li>{% if user.groups.all.0 %}  {% endif %}</li>
+                        
+                        
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block TITLE %} Cart {% endblock TITLE %}
+{% block TITLE %} Корзина {% endblock TITLE %}
 
 {% block BODY %}
 
@@ -11,14 +11,13 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Name</th>
+        <th scope="col">Название</th>
         <th scope="col">Quantity</th>
         <th scope="col">Edit</th>
         <th scope="col">price</th>
       </tr>
     </thead>
     <tbody>
-        {{ object }}
          {% for good_in_cart in object.goods.all %}
       <tr>
         <th scope="row">{{ forloop.counter }} </th>
@@ -39,7 +38,7 @@
     </tbody>
   </table>
   {% if object.goods.all %} 
-    <a href="{% url 'orders:create-order' %}" class="btn btn-outline-primary">Create order</a>
+    <a href="{% url 'orders:create-order' %}" class="btn btn-outline-primary">Создать заказ</a>
   {% endif %}
   <script>
     function addGood(pk) {

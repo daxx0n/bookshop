@@ -62,11 +62,15 @@ class Books(models.Model):
         blank = True,
         null = True
     )
+    COVER_BOOK = (
+        ('M', 'мягкая'),
+        ('T', 'твердая'),
+    )
     book_cover = models.CharField(
         verbose_name=("Cover"),
         max_length = 5,
-        blank = True,
-        null = True
+        choices= COVER_BOOK,
+        default= "M"
     )
     book_isbn = models.CharField(
         verbose_name=("ISBN"), 
@@ -99,8 +103,8 @@ class Books(models.Model):
         null = True
     )
     ISACTIVE = (
-        ('Y', 'active'),
-        ('N', 'inactive'),
+        ('Y', 'активна'),
+        ('N', 'не активна'),
     )
     is_active = models.CharField(
         verbose_name = 'Book active',
@@ -128,6 +132,9 @@ class Books(models.Model):
  
     def get_absolute_url(self):
         return reverse_lazy ('directories:Success_Page')
+    
+    def get_search_url_books(self):
+        return f"/books/book_view/{self.pk}"
 
     def book_picture_med (self):
         original_url = self.picture.url

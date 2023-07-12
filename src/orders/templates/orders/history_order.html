@@ -8,10 +8,10 @@
 <h1>История заказов</h1>
 
 {% for order in user_orders %}
-        <p> {{ order.pk }}   {{ order.status }}  </p>
+        <p> {{ order.pk }}   {{ order.status }} {{ order.created }} </p>
 {% endfor %}
-{% for goods in user_goods %}
-        <p> {{ good.pk }}   {{ good}}  </p>
+{% for goods in order_goods %}
+        <p> {{ good.pk }}  {{ order.good}}  </p>
 {% endfor %}
 
 {% endblock BODY %}
