@@ -69,7 +69,6 @@ class GoodInCart(models.Model):
         return f"{self.good.book_name} x {self.quantity}"
         
 
-
 class Order (models.Model):
     delivery_address = models.TextField(
         verbose_name = "Delivery address",
@@ -82,20 +81,18 @@ class Order (models.Model):
         max_length=10
     ) 
 
-    STATUSES = [
+    STATUSES = (
         ('NEW', "Новый"),
         ('OFORMLEN', "Оформлен"),
         ('ATWORK', "В работе"),
         ('VYDAN', "Выдан"),
         ('CLOSED', "Закрыт")
-    ]
+    )
     status = models.CharField(
         max_length=8,
         choices= STATUSES,
         default=STATUSES[0],
-        verbose_name='Order status',
-         
-    )
+
     cart = models.OneToOneField(
         Cart,
         verbose_name="Cart",
@@ -111,7 +108,6 @@ class Order (models.Model):
         auto_now_add=False,
         auto_now=True        
     )
-
 
 
 
