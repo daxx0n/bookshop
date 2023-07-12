@@ -28,7 +28,7 @@ class Author(models.Model):
     )
     author_bio = models.TextField(
             verbose_name = 'Author Bio',
-            max_length=255,
+            max_length=1000,
             null = True,
             blank = True,
             help_text= "Author's biography, max len = 300"
