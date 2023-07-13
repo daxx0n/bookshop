@@ -4,23 +4,23 @@
 {% block TITLE %} Home page {% endblock TITLE %}
 
 
-{% block BODY %} 
+{% block BODY %}
 
 
-  
+
         <div class="album py-5 bg-body-tertiary">
           <div class="container">
-        
+
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
               {% for object in object_list %}
-        
+
                 <div class="col" style="width: 25%; height: 600px;">
                   <div class="card-sl">
                   <div class="card-image">
-                     <img src="{{ object.picture.url }}" width="400" height ="400" style="max-width: 300px; object-fit: fill" class="card-img-top" alt="No image"> 
+                     <img src="{{ object.picture.url }}" width="400" height ="350" style="max-width: 300px; object-fit: fill" class="card-img-top" alt="No image">
                   </div>
 
-                  
+
                   <div class="card-heading">
                     {{object.book_name}}
                   </div>
@@ -35,19 +35,19 @@
                   </div>
                   <a href="{% url 'books:book_view' pk=object.pk %}" class="card-button">Подробнее</a>
                   <div class="d-flex justify-content-between align-items-center">
-                  
+
               </div>
-                      
-                        
+
+
                   </div>
                 </div>
               {% endfor %}
-              
-             
-              
+
+
+
             </div>
           </div>
-        </div> 
+        </div>
 
 
 
